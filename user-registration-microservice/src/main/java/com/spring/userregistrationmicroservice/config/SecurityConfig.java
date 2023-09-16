@@ -17,7 +17,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/user/register","/user/signIn").permitAll()
+                .requestMatchers("/user/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
