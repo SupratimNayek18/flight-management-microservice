@@ -1,7 +1,11 @@
 package capgemini.na.flight.entity;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +33,8 @@ public class Flight {
 	private String source;
 	@NotBlank(message = "Destination is requried")
 	private String destination;
+	@NotBlank(message = "Date is Requried")
+	private String date;
 	@NotBlank(message = "Arrival is requried")
 	private String arrival;
 	@NotBlank(message = "Departure is requried")
