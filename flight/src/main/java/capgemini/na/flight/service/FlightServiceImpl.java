@@ -19,10 +19,7 @@ public class FlightServiceImpl implements FlightService {
 	
 	@Override
 	public void addFlight(Flight flight) {
-		repository.save(flight);
-		
-		
-		
+		repository.save(flight);	
 	}
 
 	@Override
