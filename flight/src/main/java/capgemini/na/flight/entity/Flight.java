@@ -26,23 +26,23 @@ public class Flight {
 
 	@Id
 	private Integer flightId;
-	@NotBlank(message = "Flight Name is requried")
+//	@NotBlank(message = "Flight Name is requried")
 	private String flightName;
-	@NotBlank(message = "User Name is requried")
-	private String userName;
-	@PositiveOrZero(message="Seates must be positive")
+//	@NotBlank(message = "User Name is requried")
+//	private String userName;
+//	@PositiveOrZero(message="Seates must be positive")
 	private Integer seats;
-	@NotBlank(message = "Source is requried")
+//	@NotBlank(message = "Source is requried")
 	private String source;
-	@NotBlank(message = "Destination is requried")
+//	@NotBlank(message = "Destination is requried")
 	private String destination;
-	@NotBlank(message = "Date is Requried")
+//	@NotBlank(message = "Date is Requried")
 	private String date;
-	@NotBlank(message = "Price is Requried")
+//	@NotBlank(message = "Price is Requried")
 	private Double price;
-	@NotBlank(message = "Arrival is requried")
+//	@NotBlank(message = "Arrival is requried")
 	private String arrival;
-	@NotBlank(message = "Departure is requried")
+//	@NotBlank(message = "Departure is requried")
 	private String departure;
 	
 }

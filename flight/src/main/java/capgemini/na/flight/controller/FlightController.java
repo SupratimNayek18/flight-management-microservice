@@ -2,6 +2,8 @@ package capgemini.na.flight.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -32,6 +34,8 @@ public class FlightController {
 	
 	@Autowired
 	FlightService service;
+	
+	private static Logger logger = LogManager.getLogger();
 	
 	@PostMapping("/add")
 	public ResponseEntity<Flight> addFlight(@Valid @RequestBody Flight flight) {
