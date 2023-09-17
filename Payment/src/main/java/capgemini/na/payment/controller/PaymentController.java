@@ -15,6 +15,7 @@ import org.springframework.web.service.annotation.PutExchange;
 
 import capgemini.na.payment.entity.Payment;
 import capgemini.na.payment.exception.PaymentFailException;
+import capgemini.na.payment.exception.PaymentNotFoundWithIdException;
 import capgemini.na.payment.repository.PaymentRepository;
 import capgemini.na.payment.service.PaymentService;
 
@@ -30,13 +31,13 @@ public class PaymentController {
 		return service.doPayment(bookingId, userName,amount);
 	}
 	@GetMapping("/getByBookingId/{bookingId}")
-	public ResponseEntity<Payment> getPayment(@PathVariable int bookingId) {
+	public ResponseEntity<Payment> getPayment(@PathVariable int bookingId) throws PaymentNotFoundWithIdException {
 		Payment payment= service.getPayment(bookingId);
 		return new ResponseEntity<Payment>(payment,HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/{transactionId}")
-	public ResponseEntity<Payment> updatPayment(@PathVariable int transactionId,@RequestBody Payment payment) {
+	public ResponseEntity<Payment> updatPayment(@PathVariable int transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
 		Payment payment2= service.updatePayment(transactionId, payment);
 		return new ResponseEntity<Payment>(payment2,HttpStatus.OK);
 		

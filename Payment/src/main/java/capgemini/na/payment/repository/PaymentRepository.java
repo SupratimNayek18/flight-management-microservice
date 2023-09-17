@@ -8,4 +8,8 @@ public interface PaymentRepository extends MongoRepository<Payment, Integer> {
 
 	Payment findByBookingId(int bookingId);
 
+	boolean existsByBookingId(int bookingId);
+
+	boolean existsByTransactionId(int transactionId);
+
 }

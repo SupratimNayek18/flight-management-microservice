@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import capgemini.na.payment.entity.Payment;
 import capgemini.na.payment.exception.PaymentFailException;
+import capgemini.na.payment.exception.PaymentNotFoundWithIdException;
 import capgemini.na.payment.repository.PaymentRepository;
 @Service
 public class PaymentServiceImp implements PaymentService{
@@ -45,16 +46,27 @@ public class PaymentServiceImp implements PaymentService{
 	}
 
 	@Override
-	public Payment getPayment(int bookingId) {
+	public Payment getPayment(int bookingId) throws PaymentNotFoundWithIdException {
 		// TODO Auto-generated method stub
-		return repository.findByBookingId(bookingId);
+		if(repository.existsByBookingId(bookingId)) {
+		Payment payment= repository.findByBookingId(bookingId);
+		return payment;
+		}else {
+			throw new PaymentNotFoundWithIdException("Payment not found with bookingId "+bookingId);
+		}
 	}
 
 	@Override
-	public Payment updatePayment(int transactionId, Payment payment) {
+	public Payment updatePayment(int transactionId, Payment payment) throws PaymentNotFoundWithIdException {
 		// TODO Auto-generated method stub
-		repository.save(payment);
-		return payment;
+		if(repository.existsByTransactionId(transactionId)) {
+			repository.save(payment);
+			return payment;
+			}else {
+				throw new PaymentNotFoundWithIdException("Payment not found with transactionId "+transactionId);
+			}
+//		repository.save(payment);
+//		return payment;
 	}
 
 }
