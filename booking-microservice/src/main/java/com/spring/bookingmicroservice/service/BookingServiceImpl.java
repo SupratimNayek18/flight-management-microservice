@@ -3,9 +3,11 @@ package com.spring.bookingmicroservice.service;
 import com.spring.bookingmicroservice.dto.BookingDto;
 import com.spring.bookingmicroservice.dto.FlightDto;
 import com.spring.bookingmicroservice.dto.PaymentDto;
+import com.spring.bookingmicroservice.dto.UserDto;
 import com.spring.bookingmicroservice.exception.BookingFailedException;
 import com.spring.bookingmicroservice.exception.BookingNotFoundException;
 import com.spring.bookingmicroservice.exception.InvalidBookingException;
+import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
 import com.spring.bookingmicroservice.model.Booking;
 import com.spring.bookingmicroservice.repository.BookingRepository;
 import org.modelmapper.ModelMapper;
@@ -29,7 +31,18 @@ public class BookingServiceImpl implements BookingService{
     WebClient webClient;
 
     @Override
-    public BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException {
+    public BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException {
+
+        //Validating whether the username exists or not
+        UserDto userDto = webClient.get()
+                                    .uri("http://localhost:8080/user/getUser/"+userName)
+                                    .retrieve()
+                                    .bodyToMono(UserDto.class)
+                                    .block();
+
+        if(userDto==null){
+            throw new UserNameNotFoundException("User with username not found");
+        }
 
         Booking booking = new Booking();
         booking.setFlightId(flightId);

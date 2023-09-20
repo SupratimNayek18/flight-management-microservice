@@ -2,6 +2,7 @@ package com.spring.bookingmicroservice.controller;
 
 import com.spring.bookingmicroservice.dto.BookingDto;
 import com.spring.bookingmicroservice.exception.BookingFailedException;
+import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
 import com.spring.bookingmicroservice.service.BookingService;
 import jakarta.ws.rs.Path;
 import org.apache.coyote.Response;
@@ -21,7 +22,7 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping("/bookFlight/{flightId}/{userName}/{noOfPersons}")
-    public ResponseEntity<BookingDto> bookFlight(@PathVariable Integer flightId,@PathVariable String userName,@PathVariable Integer noOfPersons) throws BookingFailedException {
+    public ResponseEntity<BookingDto> bookFlight(@PathVariable Integer flightId,@PathVariable String userName,@PathVariable Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException {
 
         return new ResponseEntity<>(bookingService.bookFlight(flightId,userName,noOfPersons), HttpStatus.OK);
 
