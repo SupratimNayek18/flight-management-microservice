@@ -1,6 +1,7 @@
 package capgemini.na.flight.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,7 +32,7 @@ public class Flight {
 //	@NotBlank(message = "User Name is requried")
 //	private String userName;
 //	@PositiveOrZero(message="Seates must be positive")
-	private Integer seats;
+	private Integer seats=10;
 //	@NotBlank(message = "Source is requried")
 	private String source;
 //	@NotBlank(message = "Destination is requried")
@@ -44,5 +45,6 @@ public class Flight {
 	private String arrival;
 //	@NotBlank(message = "Departure is requried")
 	private String departure;
+	private List<String> seatNumbers=List.of("A101","A102","A103","A104","A105","A106","A107","A108","A109","A110");
 	
 }
