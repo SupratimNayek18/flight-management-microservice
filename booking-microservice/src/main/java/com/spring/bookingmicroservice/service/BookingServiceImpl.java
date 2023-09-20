@@ -2,14 +2,11 @@ package com.spring.bookingmicroservice.service;
 
 import com.spring.bookingmicroservice.dto.BookingDto;
 import com.spring.bookingmicroservice.dto.FlightDto;
-import com.spring.bookingmicroservice.dto.PaymentDto;
 import com.spring.bookingmicroservice.dto.UserDto;
-import com.spring.bookingmicroservice.exception.BookingFailedException;
-import com.spring.bookingmicroservice.exception.BookingNotFoundException;
-import com.spring.bookingmicroservice.exception.InvalidBookingException;
-import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
+import com.spring.bookingmicroservice.exception.*;
 import com.spring.bookingmicroservice.model.Booking;
 import com.spring.bookingmicroservice.repository.BookingRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,7 @@ public class BookingServiceImpl implements BookingService{
     WebClient webClient;
 
     @Override
+    @CircuitBreaker(name = "bookFlightCircuitBreaker",fallbackMethod = "bookFlightFallBack")
     public BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException {
 
         //Validating whether the username exists or not
@@ -86,6 +84,11 @@ public class BookingServiceImpl implements BookingService{
 
     }
 
+    //Fallback method for bookFlight method
+    public BookingDto bookFlightFallBack(Integer flightId, String userName, Integer noOfPersons,Exception e) {
+        return new BookingDto();
+    }
+
     @Override
     public BookingDto getBookingDetails(Integer bookingId) throws BookingNotFoundException {
 
@@ -99,6 +102,10 @@ public class BookingServiceImpl implements BookingService{
 
     }
 
+    /*
+        This method will be called from Check In Service to validate the booking
+        hence also setting the check in status to true
+    */
     @Override
     public Boolean validateBooking(Integer flightId, String userName) throws InvalidBookingException {
 
@@ -106,6 +113,8 @@ public class BookingServiceImpl implements BookingService{
 
         if(booking!=null){
             if(booking.getFlightId()==flightId){
+                booking.setCheckInStatus(true);
+                bookingRepository.save(booking);
                 return true;
             }
         }
@@ -114,17 +123,32 @@ public class BookingServiceImpl implements BookingService{
 
     }
 
+
+    /*  If checked in we must make a rest call to check in service
+        to restore the number of cancelled seats and seat numbers
+        else simple deleting the booking from db
+     */
     @Override
-    public String cancelFlight(Integer bookingId, String userName) {
+    public String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException {
 
         Booking booking = bookingRepository.findByUserName(userName);
 
         if(booking!=null){
+
+            if(booking.isCheckInStatus()){
+
+                //TODO Make a rest api call to check in service to restore the number of seats
+
+            }
+
             bookingRepository.deleteById(bookingId);
-            return "Booking Cancelled Successfully";
+
+            return "Booking with Booking Id : "+bookingId+" cancelled successfully";
+
         }
 
-        return "Booking Cancellation Failed";
+        throw new BookingCancellationFailedException("Booking cancellation failed. Please try again");
 
     }
+
 }

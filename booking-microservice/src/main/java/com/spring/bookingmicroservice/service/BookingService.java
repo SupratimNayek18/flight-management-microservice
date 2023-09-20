@@ -1,10 +1,7 @@
 package com.spring.bookingmicroservice.service;
 
 import com.spring.bookingmicroservice.dto.BookingDto;
-import com.spring.bookingmicroservice.exception.BookingFailedException;
-import com.spring.bookingmicroservice.exception.BookingNotFoundException;
-import com.spring.bookingmicroservice.exception.InvalidBookingException;
-import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
+import com.spring.bookingmicroservice.exception.*;
 
 public interface BookingService {
 
@@ -14,6 +11,6 @@ public interface BookingService {
 
     Boolean validateBooking(Integer flightId,String userName) throws InvalidBookingException;
 
-    String cancelFlight(Integer bookingId, String userName);
+    String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException;
 
 }
