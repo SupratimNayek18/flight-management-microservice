@@ -9,7 +9,7 @@ public interface BookingService {
 
     BookingDto getBookingDetails(Integer bookingId) throws BookingNotFoundException;
 
-    Boolean validateBooking(Integer flightId,String userName) throws InvalidBookingException;
+    BookingDto validateBooking(Integer bookingId, String userName) throws InvalidBookingException;
 
     String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException;
 

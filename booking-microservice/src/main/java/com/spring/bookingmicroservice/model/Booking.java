@@ -18,7 +18,7 @@ public class Booking {
     private Integer bookingId;
     private Integer flightId;
     private String userName;
-    private boolean bookingStatus;
-    private boolean checkInStatus=false;
+    private Boolean bookingStatus;
+    private Boolean checkInStatus=false;
 
 }

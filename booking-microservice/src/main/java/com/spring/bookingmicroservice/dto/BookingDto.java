@@ -15,5 +15,6 @@ public class BookingDto {
     private String flightId;
     private String userName;
     private Boolean bookingStatus;
+    private Boolean checkInStatus;
 
 }

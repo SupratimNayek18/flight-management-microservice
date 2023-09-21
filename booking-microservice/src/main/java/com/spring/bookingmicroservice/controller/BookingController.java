@@ -3,6 +3,7 @@ package com.spring.bookingmicroservice.controller;
 import com.spring.bookingmicroservice.dto.BookingDto;
 import com.spring.bookingmicroservice.exception.BookingFailedException;
 import com.spring.bookingmicroservice.exception.BookingNotFoundException;
+import com.spring.bookingmicroservice.exception.InvalidBookingException;
 import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
 import com.spring.bookingmicroservice.service.BookingService;
 import jakarta.ws.rs.Path;
@@ -29,6 +30,11 @@ public class BookingController {
     @GetMapping("/getBookingDetails/{bookingId}")
     public ResponseEntity<BookingDto> getBookingDetails(@PathVariable Integer bookingId) throws BookingNotFoundException {
         return new ResponseEntity<>(bookingService.getBookingDetails(bookingId),HttpStatus.OK);
+    }
+
+    @GetMapping("/validateBooking/{bookingId}/{userName}")
+    public ResponseEntity<BookingDto> validateBooking(@PathVariable Integer bookingId, @PathVariable String userName) throws InvalidBookingException {
+        return new ResponseEntity<>(bookingService.validateBooking(bookingId,userName),HttpStatus.OK);
     }
 
 }

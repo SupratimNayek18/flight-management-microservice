@@ -104,22 +104,23 @@ public class BookingServiceImpl implements BookingService{
 
     /*
         This method will be called from Check In Service to validate the booking
-        hence also setting the check in status to true
     */
     @Override
-    public Boolean validateBooking(Integer flightId, String userName) throws InvalidBookingException {
+    public BookingDto validateBooking(Integer bookingId, String userName) throws InvalidBookingException {
 
-        Booking booking = bookingRepository.findByUserName(userName);
+        Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
 
-        if(booking!=null){
-            if(booking.getFlightId()==flightId){
-                booking.setCheckInStatus(true);
-                bookingRepository.save(booking);
-                return true;
+        if(optionalBooking.isPresent()){
+
+            Booking booking = optionalBooking.get();
+
+            if(booking.getUserName().equals(userName)){
+                return modelMapper.map(booking,BookingDto.class);
             }
+
         }
 
-        throw new InvalidBookingException("Booking is Invalid");
+        return null;
 
     }
 
@@ -131,11 +132,11 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException {
 
-        Booking booking = bookingRepository.findByUserName(userName);
+        Booking booking = (Booking) bookingRepository.findByUserName(userName);
 
         if(booking!=null){
 
-            if(booking.isCheckInStatus()){
+            if(booking.getCheckInStatus()){
 
                 //TODO Make a rest api call to check in service to restore the number of seats
 
