@@ -48,14 +48,20 @@ public class FlightServiceImpl implements FlightService {
 	public List<Flight> searchFlight(String source, String destination) throws FlightNotFoundException {
 		
 		List<Flight> flight= new ArrayList<Flight>();
+		
 		repository.findAll().forEach(flightDetails->flight.add(flightDetails));
+		
 		List<Flight> matchedFlights=new ArrayList<Flight>();
+		
 		matchedFlights=flight.stream().filter(f->(f.getSource().equals(source)&&f.getDestination().equals(destination))).collect(Collectors.toList());
+		
 //				flight.stream().filter(f->(f.getSource()==source&&f.getDestination()==destination)).forEach(f->matchedFlights.add(f));
 //		System.out.println(matchedFlights);
+		
 		   if (matchedFlights.isEmpty()) {
 	            throw new FlightNotFoundException("No flights found for source: " + source + " and destination: " + destination);
 	        }
+		   
 		return matchedFlights;
 	}
 
@@ -63,22 +69,32 @@ public class FlightServiceImpl implements FlightService {
 	public Flight updateFlight(int flightId,List<String> seatNumbers) throws FlightNotFoundException {
 //		repository.save(flight);
 		System.out.println(seatNumbers);
+		
 		Optional<Flight> optionalFlight=repository.findById(flightId);
+		
 		if(optionalFlight.isPresent()) {
+			
 			Flight flight=optionalFlight.get();
+			
 			   int seats=flight.getSeats();
+			   
 			   seats-=seatNumbers.size();
-			   int i=0;
+			 
 			   List<String> fetchedSeatNumbers =flight.getSeatNumbers();
+			   
 			   for(String seat:seatNumbers) {
+				   
 				   if(fetchedSeatNumbers.contains(seat)) {
+					   
 					   fetchedSeatNumbers.remove(seat);
 				   }
 			   }
 
 			   flight.setSeats(seats);
 			   flight.setSeatNumbers(fetchedSeatNumbers);
+			   
 			   repository.save(flight);
+			   
 			   return flight;
 	        } 
 			   else {
@@ -95,6 +111,7 @@ public class FlightServiceImpl implements FlightService {
 		 List<Flight> matchedFlights = repository.findByFlightName(flightName);
 
 	        if (matchedFlights.isEmpty()) {
+	        	
 	            throw new FlightNotFoundException("No flights found with the name: " + flightName);
 	        }
 
@@ -107,6 +124,7 @@ public class FlightServiceImpl implements FlightService {
 		 Optional<Flight> matchedFlights = repository.findById(flightId);
 
 	        if (matchedFlights.isEmpty()) {
+	        	
 	            throw new FlightNotFoundException("No flights found with the Id: " + flightId);
 	        }
 
@@ -117,7 +135,9 @@ public class FlightServiceImpl implements FlightService {
 	public List<String> getSeatNumbers(int flightId) throws FlightNotFoundException {
 		
 		Flight matchedFlights=repository.findById(flightId).get();
+		
 		if (matchedFlights==null) {
+			
             throw new FlightNotFoundException("No flights found with the Id: " + flightId);
         }
 		
@@ -131,7 +151,9 @@ public class FlightServiceImpl implements FlightService {
 	public Integer getSeats(int flightId) throws FlightNotFoundException {
 		
 		Flight matchedFlights=repository.findById(flightId).get();
+		
 		if (matchedFlights==null) {
+			
             throw new FlightNotFoundException("No flights found with the Id: " + flightId);
         }
 		

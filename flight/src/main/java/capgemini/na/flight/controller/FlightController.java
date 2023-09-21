@@ -38,7 +38,7 @@ public class FlightController {
 		service.addFlight(flight);
 		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
 	}
-//	@ExceptionHandler(FlightNotFoundException.class)
+	
 	@DeleteMapping("/delete/{flightId}")
 	public ResponseEntity<String> deleteFlight(@PathVariable int flightId) throws FlightNotFoundException {
 		String msg=service.deleteFlight(flightId);
@@ -58,12 +58,11 @@ public class FlightController {
 	}
 
 	@PutMapping("/update/{flightId}")
-//	public ResponseEntity<Flight> update(@PathVariable int flightId,@Valid @RequestBody Flight flight) throws FlightNotFoundException {
 	public ResponseEntity<Flight> update(@PathVariable int flightId,@RequestBody ArrayList<String> seatNumbers) throws FlightNotFoundException {
 
 		 Flight flight=service.updateFlight(flightId,seatNumbers);
 		 return new ResponseEntity<Flight> (flight,HttpStatus.OK);
-//		return flight;
+
 	}
 	
 	@GetMapping("/viewByFlightName/{flightName}")
