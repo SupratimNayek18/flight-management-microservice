@@ -2,6 +2,8 @@ package capgemini.na.checkIn.service;
 
 import java.util.List;
 
+import capgemini.na.checkIn.dto.BookingDto;
+import capgemini.na.checkIn.exception.BookingNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,45 +14,49 @@ import capgemini.na.checkIn.dto.FlightDto;
 import capgemini.na.checkIn.exception.AlreadyCheckedInException;
 import capgemini.na.checkIn.model.CheckIn;
 import capgemini.na.checkIn.repository.CheckInRepository;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CheckInServiceImpl implements CheckInService {
 
-	@Autowired
-	WebClient webClient;
-	@Autowired
-	CheckInRepository repository;
+    @Autowired
+    WebClient webClient;
+    @Autowired
+    CheckInRepository repository;
 
-	@Override
-	public boolean checkIn(int flightId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException {
+    @Override
+    public boolean checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 
-		boolean result = webClient.get()
-                .uri("http://localhost:8082/booking/validateBooking/"+flightId+"/"+userName)
+        //Getting booking details using booking id for which user has not checked in
+        BookingDto bookingDto = webClient.get()
+                .uri("http://localhost:8082/booking/validateBooking/" + bookingId + "/" + userName)
                 .retrieve()
-                .bodyToMono(Boolean.class)
+                .bodyToMono(BookingDto.class)
                 .block();
-		
-		CheckIn userCheckIn=repository.findByUserName(userName);
-		if(userCheckIn!=null) {
-			throw new AlreadyCheckedInException("User CheckedIn Already");
-		}
 
-		if (result) {
+        if (bookingDto == null) {
+            throw new BookingNotFoundException("Booking with given id not found");
+        }
 
-			FlightDto responseEntity = webClient.put().uri("http://localhost:8081/flight/update/" + flightId)
-					.body(BodyInserters.fromValue(seatNumbers)).retrieve().bodyToMono(FlightDto.class).block();
+        if (bookingDto.getCheckInStatus()) {
+            throw new AlreadyCheckedInException("You have already checked in");
+        }
 
-			CheckIn checkIn = new CheckIn();
-			checkIn.setCheckInStatus("CheckIn Successfull");
-			checkIn.setFlightId(flightId);
-			checkIn.setSeatsBooked(seatNumbers);
-			checkIn.setUserName(userName);
-			repository.save(checkIn);
+        FlightDto responseEntity = webClient.put()
+                .uri("http://localhost:8081/flight/update/" + bookingDto.getFlightId())
+                .body(BodyInserters.fromValue(seatNumbers))
+                .retrieve()
+                .bodyToMono(FlightDto.class).block();
 
+        CheckIn checkIn = new CheckIn();
+        checkIn.setCheckInStatus("Success");
+        checkIn.setFlightId(bookingDto.getFlightId());
+        checkIn.setSeatsBooked(seatNumbers);
+        checkIn.setUserName(userName);
+        repository.save(checkIn);
 
-			return true;
-		}
-		return false;
-	}
+        return true;
+
+    }
 
 }
