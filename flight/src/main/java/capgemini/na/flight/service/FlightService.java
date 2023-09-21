@@ -18,10 +18,14 @@ public interface FlightService {
 	
 	List<Flight> searchFlight(String source,String destination) throws FlightNotFoundException;
 	
-	void updateFlight(int flightId,Flight flight) throws FlightNotFoundException;
+	Flight updateFlight(int flightId,List<String> seatNumbers) throws FlightNotFoundException;
 	
 	List<Flight> viewFlightsByFlightName(String flightName) throws FlightNotFoundException;
 
 	Flight viewFlightsByFlightId(int flightId) throws FlightNotFoundException;
+	
+	List<String> getSeatNumbers(int flightId) throws FlightNotFoundException;
+
+	Integer getSeats(int flightId) throws FlightNotFoundException;
 
 }

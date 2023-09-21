@@ -17,6 +17,7 @@ public class FlightServiceImpl implements FlightService {
 	@Autowired
 	FlightRepository repository;
 	
+	
 	@Override
 	public void addFlight(Flight flight) {
 		repository.save(flight);	
@@ -59,13 +60,28 @@ public class FlightServiceImpl implements FlightService {
 	}
 
 	@Override
-	public void updateFlight(int flightId,Flight flight) throws FlightNotFoundException {
+	public Flight updateFlight(int flightId,List<String> seatNumbers) throws FlightNotFoundException {
 //		repository.save(flight);
-		   if (repository.existsById(flightId)) {
-	            // Valid flightId, proceed with the update
-//	            flight.setId(flightId);
-	            repository.save(flight);
-	        } else {
+		System.out.println(seatNumbers);
+		Optional<Flight> optionalFlight=repository.findById(flightId);
+		if(optionalFlight.isPresent()) {
+			Flight flight=optionalFlight.get();
+			   int seats=flight.getSeats();
+			   seats-=seatNumbers.size();
+			   int i=0;
+			   List<String> fetchedSeatNumbers =flight.getSeatNumbers();
+			   for(String seat:seatNumbers) {
+				   if(fetchedSeatNumbers.contains(seat)) {
+					   fetchedSeatNumbers.remove(seat);
+				   }
+			   }
+
+			   flight.setSeats(seats);
+			   flight.setSeatNumbers(fetchedSeatNumbers);
+			   repository.save(flight);
+			   return flight;
+	        } 
+			   else {
 	            throw new FlightNotFoundException("Flight with ID " + flightId + " not found. Cannot update.");
 	        }
 		
@@ -75,7 +91,7 @@ public class FlightServiceImpl implements FlightService {
 	@Override
 	public List<Flight> viewFlightsByFlightName(String flightName) throws FlightNotFoundException  {
 		
-//		return repository.findByFlightName(flightName);
+
 		 List<Flight> matchedFlights = repository.findByFlightName(flightName);
 
 	        if (matchedFlights.isEmpty()) {
@@ -87,7 +103,7 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Flight viewFlightsByFlightId(int flightId) throws FlightNotFoundException {
-		// TODO Auto-generated method stub
+		
 		 Optional<Flight> matchedFlights = repository.findById(flightId);
 
 	        if (matchedFlights.isEmpty()) {
@@ -95,6 +111,33 @@ public class FlightServiceImpl implements FlightService {
 	        }
 
 	        return matchedFlights.get();
+	}
+
+	@Override
+	public List<String> getSeatNumbers(int flightId) throws FlightNotFoundException {
+		
+		Flight matchedFlights=repository.findById(flightId).get();
+		if (matchedFlights==null) {
+            throw new FlightNotFoundException("No flights found with the Id: " + flightId);
+        }
+		
+		
+		return matchedFlights.getSeatNumbers();
+		
+		
+	}
+
+	@Override
+	public Integer getSeats(int flightId) throws FlightNotFoundException {
+		
+		Flight matchedFlights=repository.findById(flightId).get();
+		if (matchedFlights==null) {
+            throw new FlightNotFoundException("No flights found with the Id: " + flightId);
+        }
+		
+		
+		return matchedFlights.getSeats();
+
 	}
 
 }

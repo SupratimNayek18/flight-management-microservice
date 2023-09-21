@@ -1,25 +1,21 @@
 package capgemini.na.flight.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import capgemini.na.flight.entity.Flight;
 import capgemini.na.flight.exception.FlightNotFoundException;
@@ -62,9 +58,12 @@ public class FlightController {
 	}
 
 	@PutMapping("/update/{flightId}")
-	public ResponseEntity<Flight> update(@PathVariable int flightId,@Valid @RequestBody Flight flight) throws FlightNotFoundException {
-		 service.updateFlight(flightId,flight);
+//	public ResponseEntity<Flight> update(@PathVariable int flightId,@Valid @RequestBody Flight flight) throws FlightNotFoundException {
+	public ResponseEntity<Flight> update(@PathVariable int flightId,@RequestBody ArrayList<String> seatNumbers) throws FlightNotFoundException {
+
+		 Flight flight=service.updateFlight(flightId,seatNumbers);
 		 return new ResponseEntity<Flight> (flight,HttpStatus.OK);
+//		return flight;
 	}
 	
 	@GetMapping("/viewByFlightName/{flightName}")
@@ -79,4 +78,11 @@ public class FlightController {
 		Flight viewById=service.viewFlightsByFlightId(flightId);
 		return new ResponseEntity<Flight>(viewById,HttpStatus.OK);
 	}
+	
+	@GetMapping("/getSeatNumbers/{flightId}")
+	public ResponseEntity<Integer> getSeatNumbers(@PathVariable int flightId) throws FlightNotFoundException{
+		int seats=service.getSeats(flightId);
+		return new ResponseEntity<Integer>(seats,HttpStatus.OK);
+	}
+	
 }
