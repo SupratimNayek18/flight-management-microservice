@@ -6,4 +6,6 @@ import capgemini.na.checkIn.model.CheckIn;
 
 public interface CheckInRepository extends MongoRepository<CheckIn,Integer>{
 
+	CheckIn findByUserName(String userName);
+
 }

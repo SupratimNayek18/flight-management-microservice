@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import capgemini.na.checkIn.exception.AlreadyCheckedInException;
 import capgemini.na.checkIn.service.CheckInService;
 
 @RestController
@@ -20,7 +21,7 @@ public class CheckInController {
 	CheckInService service;
 	
 	@GetMapping("/{flightId}/{userName}")
-	public boolean checkIn(@PathVariable int flightId,@PathVariable String userName,@RequestBody List<String> seatNumbers) {
+	public boolean checkIn(@PathVariable int flightId,@PathVariable String userName,@RequestBody List<String> seatNumbers) throws AlreadyCheckedInException {
 		return service.checkIn(flightId, userName, seatNumbers);
 	}
 
