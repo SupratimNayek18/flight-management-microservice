@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import capgemini.na.checkIn.exception.BookingNotFoundException;
+import capgemini.na.checkIn.model.CheckIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ public class CheckInController {
 	CheckInService service;
 	
 	@GetMapping("/{bookingId}/{userName}")
-	public boolean checkIn(@PathVariable int bookingId,@PathVariable String userName,@RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+	public CheckIn checkIn(@PathVariable int bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 		return service.checkIn(bookingId, userName, seatNumbers);
 	}
 

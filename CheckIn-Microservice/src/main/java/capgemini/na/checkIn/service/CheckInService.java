@@ -4,8 +4,9 @@ import java.util.List;
 
 import capgemini.na.checkIn.exception.AlreadyCheckedInException;
 import capgemini.na.checkIn.exception.BookingNotFoundException;
+import capgemini.na.checkIn.model.CheckIn;
 
 public interface CheckInService {
 
-	boolean checkIn(int bookingId,String userName,List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException;
+	CheckIn checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException;
 }

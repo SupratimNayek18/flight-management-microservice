@@ -1,5 +1,6 @@
 package capgemini.na.checkIn.service;
 
+import java.awt.print.Book;
 import java.util.List;
 
 import capgemini.na.checkIn.dto.BookingDto;
@@ -25,7 +26,7 @@ public class CheckInServiceImpl implements CheckInService {
     CheckInRepository repository;
 
     @Override
-    public boolean checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+    public CheckIn checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 
         //Getting booking details using booking id for which user has not checked in
         BookingDto bookingDto = webClient.get()
@@ -53,9 +54,16 @@ public class CheckInServiceImpl implements CheckInService {
         checkIn.setFlightId(bookingDto.getFlightId());
         checkIn.setSeatsBooked(seatNumbers);
         checkIn.setUserName(userName);
-        repository.save(checkIn);
 
-        return true;
+        //TODO make a rest api call to booking service to update checkin status
+
+        BookingDto bookingDto1 = webClient.put()
+                .uri("http://localhost:8082/booking/updateBookingCheckInStatus/"+bookingId)
+                .retrieve()
+                .bodyToMono(BookingDto.class)
+                .block();
+
+        return repository.save(checkIn);
 
     }
 

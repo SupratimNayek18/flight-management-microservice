@@ -26,18 +26,18 @@ public class PaymentController {
 	@Autowired
 	PaymentService service;
 	
-	@GetMapping("/doPayment/{bookingId}/{userName}/{amount}")
-	public boolean doPayment(@PathVariable int bookingId,@PathVariable String userName,@PathVariable double amount) throws Exception {
-		return service.doPayment(bookingId, userName,amount);
+	@GetMapping("/doPayment/{userName}/{amount}")
+	public Payment doPayment(@PathVariable String userName,@PathVariable double amount) throws Exception {
+		return service.doPayment(userName,amount);
 	}
-	@GetMapping("/getByBookingId/{bookingId}")
-	public ResponseEntity<Payment> getPayment(@PathVariable int bookingId) throws PaymentNotFoundWithIdException {
-		Payment payment= service.getPayment(bookingId);
+	@GetMapping("/getByTransactionId/{transactionId}")
+	public ResponseEntity<Payment> getPayment(@PathVariable int transactionId) throws PaymentNotFoundWithIdException {
+		Payment payment= service.getPayment(transactionId);
 		return new ResponseEntity<Payment>(payment,HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/{transactionId}")
-	public ResponseEntity<Payment> updatPayment(@PathVariable int transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
+	public ResponseEntity<Payment> updatePayment(@PathVariable int transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
 		Payment payment2= service.updatePayment(transactionId, payment);
 		return new ResponseEntity<Payment>(payment2,HttpStatus.OK);
 		
