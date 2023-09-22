@@ -8,4 +8,5 @@ public interface CheckInRepository extends MongoRepository<CheckIn,Integer>{
 
 	CheckIn findByUserName(String userName);
 
+    CheckIn findByFlightId(int flightId);
 }

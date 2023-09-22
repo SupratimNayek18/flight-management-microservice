@@ -2,6 +2,7 @@ package capgemini.na.checkIn.service;
 
 import java.awt.print.Book;
 import java.util.List;
+import java.util.Optional;
 
 import capgemini.na.checkIn.dto.BookingDto;
 import capgemini.na.checkIn.exception.BookingNotFoundException;
@@ -64,6 +65,36 @@ public class CheckInServiceImpl implements CheckInService {
                 .block();
 
         return repository.save(checkIn);
+
+    }
+
+    @Override
+    public CheckIn cancelCheckIn(int flightId) throws BookingNotFoundException {
+
+        Optional<CheckIn> optionalCheckIn = repository.findById(flightId);
+
+        if(optionalCheckIn.isPresent()){
+
+            CheckIn checkIn = optionalCheckIn.get();
+
+            List<String> seatNumbers = checkIn.getSeatsBooked();
+
+            //TODO make a rest api call to flight microservice to restore the seats
+
+            FlightDto updatedFlight = webClient.put()
+                    .uri("http://localhost:8081/flight/restoreFlightSeats/"+flightId)
+                    .body(BodyInserters.fromValue(seatNumbers))
+                    .retrieve()
+                    .bodyToMono(FlightDto.class)
+                    .block();
+
+            repository.delete(checkIn);
+
+            return checkIn;
+
+        }
+
+        throw new BookingNotFoundException("Check in data with booking id not found");
 
     }
 

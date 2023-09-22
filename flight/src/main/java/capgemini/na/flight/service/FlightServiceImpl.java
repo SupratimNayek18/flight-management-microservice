@@ -162,4 +162,32 @@ public class FlightServiceImpl implements FlightService {
 
 	}
 
+	@Override
+	public Flight restoreSeats(int flightId, List<String> seatNumbers) throws FlightNotFoundException {
+
+		Optional<Flight> optionalFlight = repository.findById(flightId);
+
+		if(optionalFlight.isPresent()){
+
+			Flight flight = optionalFlight.get();
+
+			//Getting seatNumbers and seat count from Flight db
+			List<String> fetchedSeats = flight.getSeatNumbers();
+			Integer seatCount = flight.getSeats();
+
+			//Adding cancelled seats back into the list
+			fetchedSeats.addAll(seatNumbers);
+
+			//Setting new value of restored seat count and seat numbers
+			flight.setSeats(seatCount+seatNumbers.size());
+			flight.setSeatNumbers(fetchedSeats);
+
+			return repository.save(flight);
+
+		}
+
+		throw new FlightNotFoundException("Flight with id "+flightId+" not found");
+
+	}
+
 }

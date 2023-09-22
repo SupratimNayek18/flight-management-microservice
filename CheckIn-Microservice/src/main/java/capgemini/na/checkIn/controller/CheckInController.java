@@ -6,11 +6,9 @@ import java.util.List;
 import capgemini.na.checkIn.exception.BookingNotFoundException;
 import capgemini.na.checkIn.model.CheckIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import capgemini.na.checkIn.exception.AlreadyCheckedInException;
 import capgemini.na.checkIn.service.CheckInService;
@@ -23,8 +21,13 @@ public class CheckInController {
 	CheckInService service;
 	
 	@GetMapping("/{bookingId}/{userName}")
-	public CheckIn checkIn(@PathVariable int bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
-		return service.checkIn(bookingId, userName, seatNumbers);
+	public ResponseEntity<CheckIn> checkIn(@PathVariable int bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+		return new ResponseEntity<>(service.checkIn(bookingId, userName, seatNumbers), HttpStatus.OK);
+	}
+
+	@PutMapping("/cancelCheckIn/{flightId}")
+	public ResponseEntity<CheckIn> cancelCheckIn(@PathVariable Integer flightId) throws BookingNotFoundException {
+		return new ResponseEntity<>(service.cancelCheckIn(flightId),HttpStatus.OK);
 	}
 
 }

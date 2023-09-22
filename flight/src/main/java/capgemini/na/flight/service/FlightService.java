@@ -28,4 +28,6 @@ public interface FlightService {
 
 	Integer getSeats(int flightId) throws FlightNotFoundException;
 
+	Flight restoreSeats(int flightId,List<String> seatNumbers) throws FlightNotFoundException;
+
 }
