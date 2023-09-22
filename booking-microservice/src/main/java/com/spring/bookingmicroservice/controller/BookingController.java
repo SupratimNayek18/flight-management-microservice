@@ -1,10 +1,7 @@
 package com.spring.bookingmicroservice.controller;
 
 import com.spring.bookingmicroservice.dto.BookingDto;
-import com.spring.bookingmicroservice.exception.BookingFailedException;
-import com.spring.bookingmicroservice.exception.BookingNotFoundException;
-import com.spring.bookingmicroservice.exception.InvalidBookingException;
-import com.spring.bookingmicroservice.exception.UserNameNotFoundException;
+import com.spring.bookingmicroservice.exception.*;
 import com.spring.bookingmicroservice.service.BookingService;
 import jakarta.ws.rs.Path;
 import org.apache.coyote.Response;
@@ -33,13 +30,18 @@ public class BookingController {
     }
 
     @GetMapping("/validateBooking/{bookingId}/{userName}")
-    public ResponseEntity<BookingDto> validateBooking(@PathVariable Integer bookingId, @PathVariable String userName) throws InvalidBookingException {
+    public ResponseEntity<BookingDto> validateBooking(@PathVariable Integer bookingId,@PathVariable String userName) throws InvalidBookingException {
         return new ResponseEntity<>(bookingService.validateBooking(bookingId,userName),HttpStatus.OK);
     }
 
     @PutMapping("/updateBookingCheckInStatus/{bookingId}")
     public ResponseEntity<BookingDto> updateBookingCheckInStatus(@PathVariable Integer bookingId) throws BookingNotFoundException {
         return new ResponseEntity<>(bookingService.updateBookingCheckInStatus(bookingId),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteFlight/{bookingId}/{userName}")
+    public ResponseEntity<String> cancelFlight(@PathVariable Integer bookingId,@PathVariable String userName) throws BookingCancellationFailedException {
+        return new ResponseEntity<>(bookingService.cancelFlight(bookingId,userName),HttpStatus.OK);
     }
 
 }

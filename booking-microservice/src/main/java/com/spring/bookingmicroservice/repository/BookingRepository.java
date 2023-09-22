@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface BookingRepository extends MongoRepository<Booking, Integer> {
 
-    List<Booking> findByUserName(String userName);
+    Booking findByUserName(String userName);
 
 }

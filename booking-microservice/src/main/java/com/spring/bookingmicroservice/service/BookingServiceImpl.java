@@ -1,9 +1,6 @@
 package com.spring.bookingmicroservice.service;
 
-import com.spring.bookingmicroservice.dto.BookingDto;
-import com.spring.bookingmicroservice.dto.FlightDto;
-import com.spring.bookingmicroservice.dto.PaymentDto;
-import com.spring.bookingmicroservice.dto.UserDto;
+import com.spring.bookingmicroservice.dto.*;
 import com.spring.bookingmicroservice.exception.*;
 import com.spring.bookingmicroservice.model.Booking;
 import com.spring.bookingmicroservice.repository.BookingRepository;
@@ -169,13 +166,23 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException {
 
-        Booking booking = (Booking) bookingRepository.findByUserName(userName);
+        Booking booking = bookingRepository.findByUserName(userName);
 
-        if(booking!=null){
+        System.out.println(booking.getBookingId());
+        System.out.println(bookingId);
+        System.out.println(booking.getBookingId().equals(bookingId));
+
+        if(booking!=null && booking.getBookingId().equals(bookingId)){
 
             if(booking.getCheckInStatus()){
 
                 //TODO Make a rest api call to check in service to restore the number of seats
+
+                CheckInDto checkInDto = webClient.put()
+                        .uri("http://localhost:8083/checkIn/cancelCheckIn/"+booking.getFlightId())
+                        .retrieve()
+                        .bodyToMono(CheckInDto.class)
+                        .block();
 
             }
 
