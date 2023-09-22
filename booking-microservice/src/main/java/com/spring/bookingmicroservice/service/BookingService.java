@@ -13,4 +13,6 @@ public interface BookingService {
 
     String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException;
 
+    BookingDto updateBookingCheckInStatus(Integer bookingId) throws BookingNotFoundException;
+
 }

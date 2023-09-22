@@ -2,6 +2,7 @@ package com.spring.bookingmicroservice.service;
 
 import com.spring.bookingmicroservice.dto.BookingDto;
 import com.spring.bookingmicroservice.dto.FlightDto;
+import com.spring.bookingmicroservice.dto.PaymentDto;
 import com.spring.bookingmicroservice.dto.UserDto;
 import com.spring.bookingmicroservice.exception.*;
 import com.spring.bookingmicroservice.model.Booking;
@@ -9,9 +10,13 @@ import com.spring.bookingmicroservice.repository.BookingRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.client.reactive.ClientHttpRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+import java.awt.print.Book;
 import java.util.Optional;
 import java.util.Random;
 
@@ -31,12 +36,17 @@ public class BookingServiceImpl implements BookingService{
     @CircuitBreaker(name = "bookFlightCircuitBreaker",fallbackMethod = "bookFlightFallBack")
     public BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException {
 
+        System.out.println("Method Called");
+
         //Validating whether the username exists or not
         UserDto userDto = webClient.get()
                                     .uri("http://localhost:8080/user/getUser/"+userName)
                                     .retrieve()
                                     .bodyToMono(UserDto.class)
                                     .block();
+
+        System.out.println(userDto.getUserName());
+
 
         if(userDto==null){
             throw new UserNameNotFoundException("User with username not found");
@@ -53,26 +63,51 @@ public class BookingServiceImpl implements BookingService{
                 .bodyToMono(FlightDto.class)
                 .block();
 
+        System.out.println(flightDto.getFlightId());
 
         if(flightDto!=null){
 
             double flightCost = flightDto.getPrice() * noOfPersons;
 
             //Making Payment rest api call for making payment and setting payment status if successful
-            Boolean result = webClient.get()
-                    .uri("http://localhost:8084/payment/doPayment/1/"+userName+"/"+flightCost)
+            PaymentDto paymentDtoAfterPayment = webClient.get()
+                    .uri("http://localhost:8084/payment/doPayment/"+userName+"/"+flightCost)
                     .retrieve()
-                    .bodyToMono(Boolean.class)
+                    .bodyToMono(PaymentDto.class)
                     .block();
 
+            if(paymentDtoAfterPayment!=null){
 
-            if(result){
+                int transactionId = paymentDtoAfterPayment.getTransactionId();
 
                 booking.setBookingStatus(true);
 
-                booking.setBookingId(new Random().nextInt());
+                Integer bookingId = new Random().nextInt();
+
+                booking.setBookingId(bookingId);
 
                 Booking savedBooking = bookingRepository.save(booking);
+
+                PaymentDto paymentDto = webClient.get()
+                        .uri("http://localhost:8084/payment/getByTransactionId/"+transactionId)
+                        .retrieve()
+                        .bodyToMono(PaymentDto.class)
+                        .block();
+
+                System.out.println("Line Number 96 :"+paymentDto.getTransactionId());
+
+                if(paymentDto!=null){
+
+                    paymentDto.setBookingId(bookingId);
+
+                    PaymentDto paymentDto1 = webClient.put()
+                            .uri("http://localhost:8084/payment/update/"+transactionId)
+                            .body(Mono.just(paymentDto) , PaymentDto.class)
+                            .retrieve()
+                            .bodyToMono(PaymentDto.class)
+                            .block();
+
+                }
 
                 return modelMapper.map(savedBooking,BookingDto.class);
 
@@ -115,7 +150,9 @@ public class BookingServiceImpl implements BookingService{
             Booking booking = optionalBooking.get();
 
             if(booking.getUserName().equals(userName)){
+
                 return modelMapper.map(booking,BookingDto.class);
+
             }
 
         }
@@ -149,6 +186,26 @@ public class BookingServiceImpl implements BookingService{
         }
 
         throw new BookingCancellationFailedException("Booking cancellation failed. Please try again");
+
+    }
+
+    @Override
+    public BookingDto updateBookingCheckInStatus(Integer bookingId) throws BookingNotFoundException {
+
+        Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
+
+        if(optionalBooking.isPresent()){
+
+            Booking booking = optionalBooking.get();
+
+            booking.setCheckInStatus(true);
+
+            Booking updatedBooking = bookingRepository.save(booking);
+
+            return modelMapper.map(updatedBooking,BookingDto.class);
+        }
+
+        throw new BookingNotFoundException("Booking with id "+bookingId+" not found");
 
     }
 

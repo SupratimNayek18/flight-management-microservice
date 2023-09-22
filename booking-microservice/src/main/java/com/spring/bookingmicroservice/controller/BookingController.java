@@ -37,4 +37,9 @@ public class BookingController {
         return new ResponseEntity<>(bookingService.validateBooking(bookingId,userName),HttpStatus.OK);
     }
 
+    @PutMapping("/updateBookingCheckInStatus/{bookingId}")
+    public ResponseEntity<BookingDto> updateBookingCheckInStatus(@PathVariable Integer bookingId) throws BookingNotFoundException {
+        return new ResponseEntity<>(bookingService.updateBookingCheckInStatus(bookingId),HttpStatus.OK);
+    }
+
 }
