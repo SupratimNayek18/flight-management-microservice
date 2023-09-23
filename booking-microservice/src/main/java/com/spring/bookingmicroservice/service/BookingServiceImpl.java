@@ -176,8 +176,7 @@ public class BookingServiceImpl implements BookingService{
 
             if(booking.getCheckInStatus()){
 
-                //TODO Make a rest api call to check in service to restore the number of seats
-
+                //Making a rest api call to check in service to restore the number of seats
                 CheckInDto checkInDto = webClient.put()
                         .uri("http://localhost:8083/checkIn/cancelCheckIn/"+booking.getFlightId())
                         .retrieve()
