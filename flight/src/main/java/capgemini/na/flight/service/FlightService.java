@@ -10,7 +10,7 @@ import capgemini.na.flight.exception.FlightNotFoundException;
 
 public interface FlightService {
 	
-	void addFlight(Flight flight);
+	Flight addFlight(Flight flight);
 	
 	String deleteFlight(int flightId) throws FlightNotFoundException;
 	
