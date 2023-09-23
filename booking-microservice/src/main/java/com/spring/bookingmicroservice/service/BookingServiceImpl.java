@@ -154,7 +154,7 @@ public class BookingServiceImpl implements BookingService{
 
         }
 
-        return null;
+        throw new InvalidBookingException("Booking Not Found With Id "+bookingId);
 
     }
 
