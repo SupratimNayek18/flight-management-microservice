@@ -1,5 +1,6 @@
 package com.spring.userregistrationmicroservice.controller;
 
+import com.spring.userregistrationmicroservice.dto.SignInResponse;
 import com.spring.userregistrationmicroservice.dto.UserDto;
 import com.spring.userregistrationmicroservice.entity.User;
 import com.spring.userregistrationmicroservice.request.JwtRequest;
@@ -11,8 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +34,7 @@ public class UserController {
 
     //Endpoint to receive jwt token correct username and password
     @PostMapping("/signIn")
-    public ResponseEntity<String> signIn(@RequestBody JwtRequest jwtRequest){
+    public ResponseEntity<SignInResponse> signIn(@RequestBody JwtRequest jwtRequest){
 
         try {
 
@@ -37,7 +42,17 @@ public class UserController {
                     authenticationManager
                             .authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUserName(), jwtRequest.getPassword()));
 
-            return new ResponseEntity<>(jwtUtil.generateToken(jwtRequest.getUserName()), HttpStatus.OK);
+            SignInResponse signInResponse = new SignInResponse();
+
+            String token = jwtUtil.generateToken(jwtRequest.getUserName());
+            String userName = jwtRequest.getUserName();
+
+
+            signInResponse.setUserName(userName);
+            signInResponse.setToken(token);
+            signInResponse.setRole(String.valueOf(new ArrayList<>(authentication.getAuthorities()).get(0)));
+
+            return new ResponseEntity<>(signInResponse, HttpStatus.OK);
 
         }
         catch (Exception e){

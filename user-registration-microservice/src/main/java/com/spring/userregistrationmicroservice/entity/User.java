@@ -14,7 +14,7 @@ public class User {
     @Id
     private String userName;
     private String password;
-    private String role;
+    private String role="ROLE_USER";
     private String firstName;
     private String lastName;
     private String address;

@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - authorization
+              - content-type
+              - x-requested-with
+              - cache-control
+              - x-xsrf-token
+              - accept
+              - origin
+              - x-file-name
