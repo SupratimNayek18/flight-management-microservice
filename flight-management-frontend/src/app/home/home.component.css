@@ -18,3 +18,13 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.card{
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover{
+  box-shadow: #B0D9B1 0px 2px 8px 0px;
+}
+
+
