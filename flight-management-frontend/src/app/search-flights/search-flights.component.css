@@ -1,0 +1,16 @@
+.flight-search-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+}
+
+.flight-table-div{
+    width: 800px;
+    margin-top: 30px;
+}
+
+.flight-table-div>table{
+    line-height: 40px;
+}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LogoutService } from '../service/logout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { LogoutService } from '../service/logout.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private logoutService: LogoutService) {}
+  constructor(private logoutService: LogoutService,private router:Router) {}
 
   userName = sessionStorage.getItem('userName');
 
@@ -17,5 +18,6 @@ export class HomeComponent {
 
   handleLogout() {
     this.logoutService.logout();
+    window.location.reload();
   }
 }

@@ -9,3 +9,12 @@
 .register-in-button {
   margin-left: 20px;
 }
+
+.home-body-container{
+  margin: 50px 30px;
+}
+
+.home-cards{
+  display: flex;
+  justify-content: space-evenly;
+}
