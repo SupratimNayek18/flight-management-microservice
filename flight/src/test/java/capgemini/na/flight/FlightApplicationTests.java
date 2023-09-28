@@ -72,8 +72,8 @@ class FlightServiceImplTests {
     @Test
     void testViewAllFlight() {
         List<Flight> flightList = new ArrayList<>();
-        flightList.add(new Flight(1, "Flight1",10,"Hyderabad","Bangalore","23/09/2023",5000.00,"1:00PM","4:00PM",List.of("A101","A102","A103","A104","A105","A106","A107","A108","A109","A110")));
         flightList.add(new Flight(2, "Flight2",10,"Mumbai","Bangalore","24/09/2023",6000.00,"1:00PM","4:00PM",List.of("A101","A102","A103","A104","A105","A106","A107","A108","A109","A110")));
+        flightList.add(new Flight(1, "Flight1",10,"Hyderabad","Bangalore","23/09/2023",5000.00,"1:00PM","4:00PM",List.of("A101","A102","A103","A104","A105","A106","A107","A108","A109","A110")));
 
         when(flightRepository.findAll()).thenReturn(flightList);
 
