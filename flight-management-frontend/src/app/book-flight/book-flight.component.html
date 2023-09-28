@@ -71,6 +71,20 @@
       <label for="noOfPersons" class="form-label">Number of passengers</label>
       <input type="number" class="form-control" id="noOfPersons" #noOfPersons />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="handleBooking(noOfPersons.value)"
+    >
+      Submit
+    </button>
   </form>
+  <div
+    class="alert alert-success"
+    style="margin-top: 10px"
+    role="alert"
+    *ngIf="status !== undefined"
+  >
+    {{ status }}
+  </div>
 </div>
