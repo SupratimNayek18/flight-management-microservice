@@ -3,6 +3,7 @@ package capgemini.na.checkIn.service;
 import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import capgemini.na.checkIn.dto.BookingDto;
 import capgemini.na.checkIn.exception.BookingNotFoundException;
@@ -27,7 +28,7 @@ public class CheckInServiceImpl implements CheckInService {
     CheckInRepository repository;
 
     @Override
-    public CheckIn checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+    public CheckIn checkIn(String bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 
         //Getting booking details using booking id for which user has not checked in
         BookingDto bookingDto = webClient.get()
@@ -51,15 +52,16 @@ public class CheckInServiceImpl implements CheckInService {
                 .bodyToMono(FlightDto.class).block();
 
         CheckIn checkIn = new CheckIn();
+        checkIn.setCheckInId(UUID.randomUUID().toString());
         checkIn.setCheckInStatus("Success");
         checkIn.setFlightId(bookingDto.getFlightId());
         checkIn.setSeatsBooked(seatNumbers);
         checkIn.setUserName(userName);
 
-        //TODO make a rest api call to booking service to update checkin status
+        //TODO make a rest api call to booking service to update checkin status along with checkin id
 
         BookingDto bookingDto1 = webClient.put()
-                .uri("http://localhost:8082/booking/updateBookingCheckInStatus/"+bookingId)
+                .uri("http://localhost:8082/booking/updateBookingCheckInStatus/"+bookingId+"/"+checkIn.getCheckInId())
                 .retrieve()
                 .bodyToMono(BookingDto.class)
                 .block();
@@ -69,9 +71,9 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
-    public CheckIn cancelCheckIn(int flightId) throws BookingNotFoundException {
+    public CheckIn cancelCheckIn(String checkInId) throws BookingNotFoundException {
 
-        Optional<CheckIn> optionalCheckIn = repository.findById(flightId);
+        Optional<CheckIn> optionalCheckIn = repository.findById(checkInId);
 
         if(optionalCheckIn.isPresent()){
 
@@ -79,10 +81,10 @@ public class CheckInServiceImpl implements CheckInService {
 
             List<String> seatNumbers = checkIn.getSeatsBooked();
 
-            //TODO make a rest api call to flight microservice to restore the seats
+            //Making a rest api call to flight microservice to restore the seats
 
             FlightDto updatedFlight = webClient.put()
-                    .uri("http://localhost:8081/flight/restoreFlightSeats/"+flightId)
+                    .uri("http://localhost:8081/flight/restoreFlightSeats/"+checkIn.getFlightId())
                     .body(BodyInserters.fromValue(seatNumbers))
                     .retrieve()
                     .bodyToMono(FlightDto.class)

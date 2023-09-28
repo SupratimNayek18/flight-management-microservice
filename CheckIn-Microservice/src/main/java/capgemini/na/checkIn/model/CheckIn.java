@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class CheckIn {
 
 	@Id
+	private String checkInId;
 	private Integer flightId;
 	private String userName;
 	private String checkInStatus;

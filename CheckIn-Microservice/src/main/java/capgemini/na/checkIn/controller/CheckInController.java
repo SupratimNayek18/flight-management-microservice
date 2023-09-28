@@ -21,13 +21,13 @@ public class CheckInController {
 	CheckInService service;
 	
 	@GetMapping("/{bookingId}/{userName}")
-	public ResponseEntity<CheckIn> checkIn(@PathVariable int bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+	public ResponseEntity<CheckIn> checkIn(@PathVariable String bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 		return new ResponseEntity<>(service.checkIn(bookingId, userName, seatNumbers), HttpStatus.OK);
 	}
 
-	@PutMapping("/cancelCheckIn/{flightId}")
-	public ResponseEntity<CheckIn> cancelCheckIn(@PathVariable Integer flightId) throws BookingNotFoundException {
-		return new ResponseEntity<>(service.cancelCheckIn(flightId),HttpStatus.OK);
+	@PutMapping("/cancelCheckIn/{checkInId}")
+	public ResponseEntity<CheckIn> cancelCheckIn(@PathVariable String checkInId) throws BookingNotFoundException {
+		return new ResponseEntity<>(service.cancelCheckIn(checkInId),HttpStatus.OK);
 	}
 
 }

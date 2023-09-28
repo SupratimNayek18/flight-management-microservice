@@ -10,7 +10,7 @@ import capgemini.na.payment.exception.PaymentNotFoundWithIdException;
 public interface PaymentService {
 	
 	Payment  doPayment(String userName,double amount) throws PaymentFailException;
-	Payment getPayment(int transactionId) throws PaymentNotFoundWithIdException;
-	Payment updatePayment(int transactionId,Payment payment) throws PaymentNotFoundWithIdException;
+	Payment getPayment(String transactionId) throws PaymentNotFoundWithIdException;
+	Payment updatePayment(String transactionId,Payment payment) throws PaymentNotFoundWithIdException;
 
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookingDto {
 
-    private int bookingId;
+    private String bookingId;
     private int flightId;
     private String userName;
     private Boolean bookingStatus;

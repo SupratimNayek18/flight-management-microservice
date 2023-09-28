@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import capgemini.na.payment.entity.Payment;
 
-public interface PaymentRepository extends MongoRepository<Payment, Integer> {
+public interface PaymentRepository extends MongoRepository<Payment, String> {
 
 	Payment findByBookingId(int bookingId);
 

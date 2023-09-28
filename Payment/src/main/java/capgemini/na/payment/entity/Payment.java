@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Document(collection="payment")
 public class Payment {
 	@Id
-	private int transactionId;
-	private int bookingId;
+	private String transactionId;
+	private String bookingId;
 	private String userName;
 	private double amount;
 	private String transactionStatus;

@@ -31,13 +31,13 @@ public class PaymentController {
 		return service.doPayment(userName,amount);
 	}
 	@GetMapping("/getByTransactionId/{transactionId}")
-	public ResponseEntity<Payment> getPayment(@PathVariable int transactionId) throws PaymentNotFoundWithIdException {
+	public ResponseEntity<Payment> getPayment(@PathVariable String transactionId) throws PaymentNotFoundWithIdException {
 		Payment payment= service.getPayment(transactionId);
 		return new ResponseEntity<Payment>(payment,HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/{transactionId}")
-	public ResponseEntity<Payment> updatePayment(@PathVariable int transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
+	public ResponseEntity<Payment> updatePayment(@PathVariable String transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
 		Payment payment2= service.updatePayment(transactionId, payment);
 		return new ResponseEntity<Payment>(payment2,HttpStatus.OK);
 		

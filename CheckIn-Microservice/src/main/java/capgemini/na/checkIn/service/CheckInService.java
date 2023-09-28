@@ -8,7 +8,7 @@ import capgemini.na.checkIn.model.CheckIn;
 
 public interface CheckInService {
 
-	CheckIn checkIn(int bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException;
+	CheckIn checkIn(String bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException;
 
-	CheckIn cancelCheckIn(int flightId) throws BookingNotFoundException;
+	CheckIn cancelCheckIn(String checkInId) throws BookingNotFoundException;
 }

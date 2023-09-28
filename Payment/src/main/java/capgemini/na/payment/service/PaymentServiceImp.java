@@ -2,6 +2,7 @@ package capgemini.na.payment.service;
 
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,8 @@ public class PaymentServiceImp implements PaymentService {
         boolean paymentDone = false;
         try {
             Payment payment = new Payment();
-            Random random = new Random();
 
-            // Generate a random number between 100 and 1000 (inclusive)
-            int randomNumber = random.nextInt(901) + 100;
-            System.out.println(randomNumber);
-            String tractionId = "" + randomNumber;
-            int id = Integer.parseInt(tractionId);
-            payment.setTransactionId(id);
+            payment.setTransactionId(UUID.randomUUID().toString());
             payment.setUserName(userName);
             payment.setAmount(amount);
             payment.setTransactionStatus("Payment Successful");
@@ -46,7 +41,7 @@ public class PaymentServiceImp implements PaymentService {
     }
 
     @Override
-    public Payment getPayment(int transactionId) throws PaymentNotFoundWithIdException {
+    public Payment getPayment(String transactionId) throws PaymentNotFoundWithIdException {
         // TODO Auto-generated method stub
 
         Optional<Payment> optionalPayment = repository.findById(transactionId);
@@ -61,9 +56,10 @@ public class PaymentServiceImp implements PaymentService {
     }
 
     @Override
-    public Payment updatePayment(int transactionId, Payment payment) throws PaymentNotFoundWithIdException {
+    public Payment updatePayment(String transactionId, Payment payment) throws PaymentNotFoundWithIdException {
         // TODO Auto-generated method stub
-        if (repository.existsByTransactionId(transactionId)) {
+        Optional<Payment> payment1 = repository.findById(transactionId);
+        if (payment1.isPresent()) {
             repository.save(payment);
             return payment;
         } else {
