@@ -14,8 +14,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.awt.print.Book;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class BookingServiceImpl implements BookingService{
@@ -75,11 +77,11 @@ public class BookingServiceImpl implements BookingService{
 
             if(paymentDtoAfterPayment!=null){
 
-                int transactionId = paymentDtoAfterPayment.getTransactionId();
+                String transactionId = paymentDtoAfterPayment.getTransactionId();
 
                 booking.setBookingStatus(true);
 
-                Integer bookingId = new Random().nextInt();
+                String bookingId = UUID.randomUUID().toString();
 
                 booking.setBookingId(bookingId);
 
@@ -122,7 +124,7 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public BookingDto getBookingDetails(Integer bookingId) throws BookingNotFoundException {
+    public BookingDto getBookingDetails(String bookingId) throws BookingNotFoundException {
 
         Optional<Booking> booking = bookingRepository.findById(bookingId);
 
@@ -138,7 +140,7 @@ public class BookingServiceImpl implements BookingService{
         This method will be called from Check In Service to validate the booking
     */
     @Override
-    public BookingDto validateBooking(Integer bookingId, String userName) throws InvalidBookingException {
+    public BookingDto validateBooking(String bookingId, String userName) throws InvalidBookingException {
 
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
 
@@ -164,9 +166,19 @@ public class BookingServiceImpl implements BookingService{
         else simple deleting the booking from db
      */
     @Override
-    public String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException {
+    public String cancelFlight(String bookingId, String userName) throws BookingCancellationFailedException, BookingNotFoundException {
 
-        Booking booking = bookingRepository.findByUserName(userName);
+        List<Booking> bookingList = bookingRepository.findByUserName(userName);
+
+        Booking booking = null;
+
+        for(Booking searchedBooking : bookingList){
+            if(searchedBooking.getBookingId().equals(bookingId)){
+                booking = searchedBooking;
+            }
+        }
+
+        if(booking==null) throw new BookingNotFoundException("No bookings found with this username");
 
         System.out.println(booking.getBookingId());
         System.out.println(bookingId);
@@ -178,7 +190,7 @@ public class BookingServiceImpl implements BookingService{
 
                 //Making a rest api call to check in service to restore the number of seats
                 CheckInDto checkInDto = webClient.put()
-                        .uri("http://localhost:8083/checkIn/cancelCheckIn/"+booking.getFlightId())
+                        .uri("http://localhost:8083/checkIn/cancelCheckIn/"+booking.getCheckInId())
                         .retrieve()
                         .bodyToMono(CheckInDto.class)
                         .block();
@@ -196,7 +208,7 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public BookingDto updateBookingCheckInStatus(Integer bookingId) throws BookingNotFoundException {
+    public BookingDto updateBookingCheckInStatus(String bookingId,String checkInId) throws BookingNotFoundException {
 
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingId);
 
@@ -205,6 +217,8 @@ public class BookingServiceImpl implements BookingService{
             Booking booking = optionalBooking.get();
 
             booking.setCheckInStatus(true);
+
+            booking.setCheckInId(checkInId);
 
             Booking updatedBooking = bookingRepository.save(booking);
 

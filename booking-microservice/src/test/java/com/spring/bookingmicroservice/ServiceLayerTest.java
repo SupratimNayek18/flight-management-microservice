@@ -17,6 +17,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,7 +89,7 @@ public class ServiceLayerTest {
     }
 
     @Test
-    public void testCancelFlightWhenBookingNotNull() throws BookingCancellationFailedException {
+    public void testCancelFlightWhenBookingNotNull() throws BookingCancellationFailedException, BookingNotFoundException {
         // Create a sample booking and check-in DTO
         Booking booking = new Booking();
         booking.setBookingId(1);
@@ -95,11 +98,14 @@ public class ServiceLayerTest {
         booking.setCheckInStatus(true);
         booking.setFlightId(101);
 
+        List<Booking> list = new ArrayList<>();
+        list.add(booking);
+
         CheckInDto checkInDto = new CheckInDto();
         checkInDto.setCheckInStatus("true");
 
         // Mock the behavior of bookingRepository
-        when(bookingRepository.findByUserName("user1")).thenReturn(booking);
+        when(bookingRepository.findByUserName("user1")).thenReturn(list);
         doNothing().when(bookingRepository).deleteById(1);
 
         // Mock the WebClient for REST API call

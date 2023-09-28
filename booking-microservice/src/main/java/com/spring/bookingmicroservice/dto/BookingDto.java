@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookingDto {
 
-    private Integer bookingId;
+    private String bookingId;
     private Integer flightId;
     private String userName;
     private Boolean bookingStatus;
     private Boolean checkInStatus;
-
+    private String checkInId;
 }

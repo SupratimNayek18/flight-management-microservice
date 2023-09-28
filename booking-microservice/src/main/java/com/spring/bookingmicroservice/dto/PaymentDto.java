@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PaymentDto {
 
-    private int transactionId;
-    private int bookingId;
+    private String transactionId;
+    private String bookingId;
     private String userName;
     private double amount;
     private String transactionStatus;

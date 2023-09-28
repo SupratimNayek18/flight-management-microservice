@@ -1,0 +1,76 @@
+<div class="bookflight-form-container">
+  <h4 style="text-align: center; margin-bottom: 30px">Book Flight</h4>
+  <form>
+    <div class="mb-3">
+      <label for="flightId" class="form-label">Flight Id</label>
+      <input
+        type="text"
+        class="form-control"
+        id="flightId"
+        name="flightId"
+        [(ngModel)]="flightId"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="source" class="form-label">Source</label>
+      <input
+        type="text"
+        class="form-control"
+        id="source"
+        name="source"
+        [(ngModel)]="source"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="destination" class="form-label">Destination</label>
+      <input
+        type="text"
+        class="form-control"
+        id="destination"
+        name="destination"
+        [(ngModel)]="destination"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="departure" class="form-label">Departure</label>
+      <input
+        type="text"
+        class="form-control"
+        id="departure"
+        name="departure"
+        [(ngModel)]="departure"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="arrival" class="form-label">Arrival</label>
+      <input
+        type="text"
+        class="form-control"
+        id="arrival"
+        name="arrival"
+        [(ngModel)]="arrival"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="arrival" class="form-label">Price</label>
+      <input
+        type="text"
+        class="form-control"
+        id="price"
+        name="price"
+        [(ngModel)]="price"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="noOfPersons" class="form-label">Number of passengers</label>
+      <input type="number" class="form-control" id="noOfPersons" #noOfPersons />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

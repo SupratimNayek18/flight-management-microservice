@@ -7,12 +7,12 @@ public interface BookingService {
 
     BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException;
 
-    BookingDto getBookingDetails(Integer bookingId) throws BookingNotFoundException;
+    BookingDto getBookingDetails(String bookingId) throws BookingNotFoundException;
 
-    BookingDto validateBooking(Integer bookingId, String userName) throws InvalidBookingException;
+    BookingDto validateBooking(String bookingId, String userName) throws InvalidBookingException;
 
-    String cancelFlight(Integer bookingId, String userName) throws BookingCancellationFailedException;
+    String cancelFlight(String bookingId, String userName) throws BookingCancellationFailedException, BookingNotFoundException;
 
-    BookingDto updateBookingCheckInStatus(Integer bookingId) throws BookingNotFoundException;
+    BookingDto updateBookingCheckInStatus(String bookingId,String checkInId) throws BookingNotFoundException;
 
 }

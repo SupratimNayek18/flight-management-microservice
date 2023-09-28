@@ -15,10 +15,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Booking {
 
     @Id
-    private Integer bookingId;
+    private String bookingId;
     private Integer flightId;
     private String userName;
     private Boolean bookingStatus;
     private Boolean checkInStatus=false;
+    private String checkInId;
 
 }

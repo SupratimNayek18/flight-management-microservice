@@ -1,49 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-  <div class="flight-search-container">
-    <h3 style="margin-bottom: 30px;">Search Flight</h3>
-    <form class="row g-3">
-      <div class="col-auto">
-        <label for="source" class="visually-hidden">Password</label>
-        <input type="text" class="form-control" id="source" placeholder="Enter Source" #source>
-      </div>
-      <div class="col-auto">
-          <label for="destination" class="visually-hidden">Password</label>
-          <input type="text" class="form-control" id="destination" placeholder="Destination" #destination>
+  </head>
+  <body>
+    <div class="flight-search-container">
+      <h3 style="margin-bottom: 30px">Search Flight</h3>
+      <form class="row g-3">
+        <div class="col-auto">
+          <label for="source" class="visually-hidden">Password</label>
+          <input
+            type="text"
+            class="form-control"
+            id="source"
+            placeholder="Enter Source"
+            #source
+          />
         </div>
-      <div class="col-auto">
-        <button type="button" class="btn btn-success mb-3" (click)="searchFlights(source.value,destination.value)">Search</button>
+        <div class="col-auto">
+          <label for="destination" class="visually-hidden">Password</label>
+          <input
+            type="text"
+            class="form-control"
+            id="destination"
+            placeholder="Destination"
+            #destination
+          />
+        </div>
+        <div class="col-auto">
+          <button
+            type="button"
+            class="btn btn-success mb-3"
+            (click)="searchFlights(source.value, destination.value)"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+      <div ngClass="flight-table-div" *ngIf="flights.length != 0">
+        <table class="table table-striped table-hover">
+          <thead class="table-light">
+            <th colspan="2">Flight Name</th>
+            <th colspan="2">Source</th>
+            <th colspan="2">Destination</th>
+            <th colspan="2">Date</th>
+            <th colspan="2">Departure</th>
+            <th colspan="2">Arrival</th>
+            <th colspan="2">Price</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let flight of flights">
+              <td colspan="2">{{ flight.flightName }}</td>
+              <td colspan="2">{{ flight.source }}</td>
+              <td colspan="2">{{ flight.destination }}</td>
+              <td colspan="2">{{ flight.date }}</td>
+              <td colspan="2">{{ flight.departure }}</td>
+              <td colspan="2">{{ flight.arrival }}</td>
+              <td colspan="2">{{ flight.price }}</td>
+              <button
+                style="margin-top: 8px"
+                class="btn btn-success"
+                (click)="bookFlightClick(flight)"
+              >
+                Book Flight
+              </button>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </form>
-    <div ngClass="flight-table-div" *ngIf="flights.length!=0">
-      <table class="table table-striped table-hover">
-        <thead class="table-light">
-          <th colspan="2">Flight Name</th>
-          <th colspan="2">Source</th>
-          <th colspan="2">Destination</th>
-          <th colspan="2">Date</th>
-          <th colspan="2">Departure</th>
-          <th colspan="2">Arrival</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let flight of flights" >
-            <td colspan="2">{{flight.flightName}}</td>
-            <td colspan="2">{{flight.source}}</td>
-            <td colspan="2">{{flight.destination}}</td>
-            <td colspan="2">{{flight.date}}</td>
-            <td colspan="2">{{flight.departure}}</td>
-            <td colspan="2">{{flight.arrival}}</td>
-            <button style="margin-top: 8px;" class="btn btn-success" (click)="bookFlightClick(flight)">Book Flight</button>
-          </tr>
-        </tbody>
-      </table>
     </div>
-  </div>
-</body>
+  </body>
 </html>
