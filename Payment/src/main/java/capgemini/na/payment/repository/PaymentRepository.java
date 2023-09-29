@@ -10,6 +10,6 @@ public interface PaymentRepository extends MongoRepository<Payment, String> {
 
 	boolean existsByBookingId(int bookingId);
 
-	boolean existsByTransactionId(int transactionId);
+	boolean existsByTransactionId(String transactionId);
 
 }
