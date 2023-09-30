@@ -17,4 +17,5 @@ public class BookingDto {
     private Boolean bookingStatus;
     private Boolean checkInStatus;
     private String checkInId;
+    private Integer noOfPersons;
 }

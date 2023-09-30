@@ -54,6 +54,7 @@ public class BookingServiceImpl implements BookingService{
         Booking booking = new Booking();
         booking.setFlightId(flightId);
         booking.setUserName(userName);
+        booking.setNoOfPersons(noOfPersons);
 
         //Retrieving Flight Details using webclient from flight microservice
         FlightDto flightDto = webClient.get()
@@ -133,6 +134,19 @@ public class BookingServiceImpl implements BookingService{
         }
 
         throw new BookingNotFoundException("Booking with given id not found");
+
+    }
+
+    @Override
+    public List<Booking> getBookingByUserName(String userName) throws BookingNotFoundException {
+
+        List<Booking> bookingDetails = bookingRepository.findByUserName(userName);
+
+        if(bookingDetails.isEmpty()){
+            throw new BookingNotFoundException("No booking details found for given username");
+        }
+
+        return bookingDetails;
 
     }
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="bookings-container">
+      <h3 style="text-align: center; margin-bottom: 30px">My Bookings</h3>
+      <div class="card mb-3" *ngFor="let booking of bookingList; let i = index">
+        <div class="card-body">
+          <h5 class="card-title">Booking Id : {{ booking.bookingId }}</h5>
+          <p class="card-text">Flight Id : {{ booking.flightId }}</p>
+          <p class="card-text">Check In Status : {{ booking.checkInStatus }}</p>
+          <p
+            class="card-text"
+            *ngIf="isCardSelected(i)"
+            [innerHTML]="status"
+          ></p>
+          <p class="card-text">
+            <button
+              ngClass="btn btn-primary"
+              style="margin-right: 10px"
+              (click)="setStatus(i, booking.flightId)"
+            >
+              View Details
+            </button>
+            <button
+              ngClass="btn btn-success"
+              style="margin-right: 10px"
+              *ngIf="!booking.checkInStatus"
+              (click)="
+                checkInRoute(
+                  booking.flightId,
+                  booking.bookingId,
+                  booking.noOfPersons
+                )
+              "
+            >
+              Check In
+            </button>
+            <button
+              ngClass="btn btn-danger"
+              (click)="cancelFlight(booking.bookingId)"
+            >
+              Cancel Flight
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
