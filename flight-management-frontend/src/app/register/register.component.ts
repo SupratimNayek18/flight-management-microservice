@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { ApiService } from '../service/api.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -8,30 +9,27 @@ import { ApiService } from '../service/api.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private apiService: ApiService) {}
+  formData = {
+    firstName: '',
+    lastName: '',
+    address: '',
+    phoneNumber: '',
+    userName: '',
+    password: '',
+  };
+
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private formBuilder: FormBuilder
+  ) {}
 
   navigateToAbout() {
     this.router.navigate(['/register']);
   }
 
-  handleClick(
-    firstName: String,
-    lastName: String,
-    address: String,
-    phoneNumber: String,
-    userName: String,
-    password: String
-  ) {
-    let userData = {
-      userName: userName,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      address: address,
-      phoneNumber: Number(phoneNumber),
-    };
-
-    this.apiService.registerUser(userData).subscribe(
+  handleRegistration(formData: any) {
+    this.apiService.registerUser(this.formData).subscribe(
       (response: any) => {
         console.log(response);
         this.router.navigate(['']);

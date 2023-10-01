@@ -8,27 +8,64 @@
   <body>
     <div class="signin-container">
       <h3 style="margin-bottom: 30px">Sign In</h3>
-      <div class="mb-3 row">
-        <label for="userName" class="col-sm-2 col-form-label">User Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="userName" #userName />
+      <form #signinform="ngForm" (ngSubmit)="handleSignin(signinform)">
+        <div class="mb-3 row">
+          <label for="userName" class="col-sm-2 col-form-label"
+            >User Name</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              name="userName"
+              required
+              [(ngModel)]="formData.userName"
+            />
+            <div
+              *ngIf="
+                signinform.controls['userName'].invalid &&
+                signinform.controls['userName'].touched
+              "
+              class="text-danger"
+            >
+              User Name is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="password" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="password" #password />
+
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+              [(ngModel)]="formData.password"
+            />
+            <div
+              *ngIf="
+                signinform.controls['password'].invalid &&
+                signinform.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              Password is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-12">
-        <button
-          type="button"
-          (click)="handleClick(userName.value, password.value)"
-          class="btn btn-primary"
-        >
-          Sign In
-        </button>
-      </div>
+        <div class="col-12">
+          <button
+            type="button"
+            [disabled]="signinform.invalid"
+            class="btn btn-primary"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     </div>
   </body>
 </html>
