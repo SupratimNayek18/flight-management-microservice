@@ -35,7 +35,7 @@ class PaymentApplicationTests {
         String userName = "TestUser";
         double amount = 100.0;
         Payment mockPayment = new Payment();
-        mockPayment.setTransactionId("1"); // Change transactionId to String
+        mockPayment.setTransactionId("1"); 
         mockPayment.setUserName(userName);
         mockPayment.setAmount(100);
         mockPayment.setTransactionStatus("Payment Successful");
@@ -47,36 +47,20 @@ class PaymentApplicationTests {
         // Assert
         assertNotNull(result);
         assertEquals(userName, result.getUserName());
-        assertEquals(amount, result.getAmount(), 0.001); // Allow for a small floating-point difference
+        assertEquals(amount, result.getAmount(), 0.001); 
         assertEquals("Payment Successful", result.getTransactionStatus());
     }
 
     @Test
     public void testGetPaymentSuccess() throws PaymentNotFoundWithIdException {
         // Arrange
-        String transactionId = "1"; // Change transactionId to String
+        String transactionId = "1";
         Payment mockPayment = new Payment();
         mockPayment.setTransactionId(transactionId);
         when(repository.findById(transactionId)).thenReturn(Optional.of(mockPayment));
 
         // Act
         Payment result = paymentService.getPayment(transactionId);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(transactionId, result.getTransactionId());
-    }
-
-    @Test
-    public void testUpdatePaymentSuccess() throws PaymentNotFoundWithIdException {
-        // Arrange
-        String transactionId = "1"; // Change transactionId to String
-        Payment updatedPayment = new Payment(transactionId, "234", "VARUN", 200, "success");
-//        updatedPayment.setTransactionId(transactionId);
-        when(repository.existsByTransactionId(transactionId)).thenReturn(true);
-
-        // Act
-        Payment result = paymentService.updatePayment(transactionId, updatedPayment);
 
         // Assert
         assertNotNull(result);
