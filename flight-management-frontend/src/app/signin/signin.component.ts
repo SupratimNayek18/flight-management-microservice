@@ -8,16 +8,16 @@ import { ApiService } from '../service/api.service';
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent {
+  formData = { userName: '', password: '' };
+
   constructor(private router: Router, private apiService: ApiService) {
     if (sessionStorage.getItem('token') != null) {
       this.router.navigate(['']);
     }
   }
 
-  handleClick(userName: String, password: String) {
-    let data = { userName: userName, password: password };
-
-    this.apiService.signin(data).subscribe(
+  handleSignin(formData: any) {
+    this.apiService.signin(this.formData).subscribe(
       (response: any) => {
         sessionStorage.setItem('userName', response.userName);
         sessionStorage.setItem('token', response.token);

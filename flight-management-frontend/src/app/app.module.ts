@@ -12,6 +12,8 @@ import { NoticesPromotionsComponent } from './notices-promotions/notices-promoti
 import { BookFlightCardContainerComponent } from './book-flight-card-container/book-flight-card-container.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { FormsModule } from '@angular/forms';
+import { ShowBookingsComponent } from './show-bookings/show-bookings.component';
+import { CheckInComponent } from './check-in/check-in.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { FormsModule } from '@angular/forms';
     NoticesPromotionsComponent,
     BookFlightCardContainerComponent,
     BookFlightComponent,
+    ShowBookingsComponent,
+    CheckInComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

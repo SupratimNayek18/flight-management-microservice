@@ -32,6 +32,7 @@
         </form>
       </span>
       <span class="navbar-text" *ngIf="userName != null">
+        <a class="nav-link" routerLink="showBookings">My Bookings</a>
         <button class="btn btn-danger" type="button" (click)="handleLogout()">
           Logout
         </button>

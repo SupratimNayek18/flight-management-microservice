@@ -7,69 +7,166 @@
   <body>
     <div class="register-container">
       <h3 style="margin-bottom: 30px">Register Here</h3>
-      <div class="mb-3 row">
-        <label for="firstName" class="col-sm-2 col-form-label"
-          >First Name</label
-        >
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="firstName" #firstName />
+      <form
+        #registrationForm="ngForm"
+        (ngSubmit)="handleRegistration(registrationForm)"
+      >
+        <div class="mb-3 row">
+          <label for="firstName" class="col-sm-2 col-form-label"
+            >First Name</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              name="firstName"
+              required
+              [(ngModel)]="formData['firstName']"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['firstName'].invalid &&
+                registrationForm.controls['firstName'].touched
+              "
+              class="text-danger"
+            >
+              First Name is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="lastName" #lastName />
+
+        <div class="mb-3 row">
+          <label for="lastName" class="col-sm-2 col-form-label"
+            >Last Name</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              name="lastName"
+              required
+              [(ngModel)]="formData['lastName']"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['lastName'].invalid &&
+                registrationForm.controls['lastName'].touched
+              "
+              class="text-danger"
+            >
+              Last Name is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="address" class="col-sm-2 col-form-label">Address</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="address" #address />
+
+        <div class="mb-3 row">
+          <label for="address" class="col-sm-2 col-form-label">Address</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="address"
+              name="address"
+              required
+              [(ngModel)]="formData['address']"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['address'].invalid &&
+                registrationForm.controls['address'].touched
+              "
+              class="text-danger"
+            >
+              Address is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="phoneNumber" class="col-sm-2 col-form-label"
-          >Phone Number</label
-        >
-        <div class="col-sm-10">
-          <input
-            type="number"
-            class="form-control"
-            id="phoneNumber"
-            #phoneNumber
-          />
+
+        <div class="mb-3 row">
+          <label for="phoneNumber" class="col-sm-2 col-form-label"
+            >Phone Number</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="number"
+              class="form-control"
+              id="phoneNumber"
+              name="phoneNumber"
+              required
+              [(ngModel)]="formData.phoneNumber"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['phoneNumber'].invalid &&
+                registrationForm.controls['phoneNumber'].touched
+              "
+              class="text-danger"
+            >
+              Phone Number is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="userName" class="col-sm-2 col-form-label">User Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="userName" #userName />
+
+        <div class="mb-3 row">
+          <label for="userName" class="col-sm-2 col-form-label"
+            >User Name</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              name="userName"
+              required
+              [(ngModel)]="formData.userName"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['userName'].invalid &&
+                registrationForm.controls['userName'].touched
+              "
+              class="text-danger"
+            >
+              User Name is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="password" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="password" #password />
+
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+              [(ngModel)]="formData.password"
+            />
+            <div
+              *ngIf="
+                registrationForm.controls['password'].invalid &&
+                registrationForm.controls['password'].touched
+              "
+              class="text-danger"
+            >
+              Password is required
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-12">
-        <button
-          type="button"
-          (click)="
-            handleClick(
-              firstName.value,
-              lastName.value,
-              address.value,
-              phoneNumber.value,
-              userName.value,
-              password.value
-            )
-          "
-          class="btn btn-primary"
-        >
-          Register
-        </button>
-      </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            [disabled]="registrationForm.invalid"
+            class="btn btn-primary"
+          >
+            Register
+          </button>
+        </div>
+      </form>
     </div>
   </body>
 </html>

@@ -21,5 +21,5 @@ public class Booking {
     private Boolean bookingStatus;
     private Boolean checkInStatus=false;
     private String checkInId;
-
+    private Integer noOfPersons;
 }
