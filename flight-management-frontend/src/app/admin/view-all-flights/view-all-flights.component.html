@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3 style="text-align: center; margin-top: 30px">Flights</h3>
+    <div class="flights-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Flight Id</th>
+            <th scope="col">Flight Name</th>
+            <th scope="col">Source</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Seats Available</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let flight of flights">
+            <td>{{ flight.flightId }}</td>
+            <td>{{ flight.flightName }}</td>
+            <td>{{ flight.source }}</td>
+            <td>{{ flight.destination }}</td>
+            <td>{{ flight.departure }}</td>
+            <td>{{ flight.arrival }}</td>
+            <td>{{ flight.seats }}</td>
+            <td>{{ flight.price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

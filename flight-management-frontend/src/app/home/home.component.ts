@@ -8,7 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private logoutService: LogoutService,private router:Router) {}
+  constructor(private logoutService: LogoutService, private router: Router) {}
+
+  ngOnInit() {
+    if (sessionStorage.getItem('role') === 'ROLE_ADMIN') {
+      this.router.navigate(['adminPanel']);
+    }
+  }
 
   userName = sessionStorage.getItem('userName');
 

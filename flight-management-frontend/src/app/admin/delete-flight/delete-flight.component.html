@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="delete-flight-container">
+      <h3 style="margin-bottom: 30px">Delete Flight</h3>
+      <form
+        #deleteFlightForm="ngForm"
+        (ngSubmit)="handleDeleteFlight(deleteFlightForm)"
+      >
+        <div class="col-sm-10">
+          <input
+            type="number"
+            class="form-control"
+            id="flightId"
+            name="flightId"
+            required
+            [(ngModel)]="flightId"
+          />
+          <div
+            *ngIf="
+              deleteFlightForm.controls['flightId'].invalid &&
+              deleteFlightForm.controls['flightId'].touched
+            "
+            class="text-danger"
+          >
+            Flight Id is required
+          </div>
+        </div>
+        <div class="col-12" style="margin-top: 20px">
+          <button
+            type="submit"
+            [disabled]="deleteFlightForm.invalid"
+            class="btn btn-danger"
+          >
+            Delete Flight
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

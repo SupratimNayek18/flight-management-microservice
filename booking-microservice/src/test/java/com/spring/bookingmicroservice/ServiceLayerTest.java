@@ -66,16 +66,16 @@ public class ServiceLayerTest {
     public void testGetBookingDetailsWhenBookingPresent() throws BookingNotFoundException {
 
         Booking booking = new Booking();
-        booking.setBookingId(1);
+        booking.setBookingId("1");
 
         BookingDto expectedDto = new BookingDto();
-        expectedDto.setBookingId(1);
+        expectedDto.setBookingId("1");
 
         // Mocking the behavior of bookingRepository
-        when(bookingRepository.findById(1)).thenReturn(Optional.of(booking));
+        when(bookingRepository.findById("1")).thenReturn(Optional.of(booking));
 
         // Calling the getBookingDetails method
-        BookingDto result = bookingService.getBookingDetails(1);
+        BookingDto result = bookingService.getBookingDetails("1");
 
         // Verifying the result
         assertNotNull(result);
@@ -84,15 +84,15 @@ public class ServiceLayerTest {
 
     @Test
     public void testGetBookingDetailsWhenBookingNotPresent(){
-        when(bookingRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(BookingNotFoundException.class,()->bookingService.getBookingDetails(1));
+        when(bookingRepository.findById("1")).thenReturn(Optional.empty());
+        assertThrows(BookingNotFoundException.class,()->bookingService.getBookingDetails("1"));
     }
 
     @Test
     public void testCancelFlightWhenBookingNotNull() throws BookingCancellationFailedException, BookingNotFoundException {
         // Create a sample booking and check-in DTO
         Booking booking = new Booking();
-        booking.setBookingId(1);
+        booking.setBookingId("1");
         booking.setUserName("user1");
         booking.setBookingStatus(true);
         booking.setCheckInStatus(true);
@@ -106,7 +106,7 @@ public class ServiceLayerTest {
 
         // Mock the behavior of bookingRepository
         when(bookingRepository.findByUserName("user1")).thenReturn(list);
-        doNothing().when(bookingRepository).deleteById(1);
+        doNothing().when(bookingRepository).deleteById("1");
 
         // Mock the WebClient for REST API call
         when(webClient.put()).thenReturn(requestBodyUriSpec);
@@ -115,7 +115,7 @@ public class ServiceLayerTest {
         when(responseSpec.bodyToMono(CheckInDto.class)).thenReturn(Mono.just(checkInDto));
 
         // Call the cancelFlight method
-        String result = bookingService.cancelFlight(1, "user1");
+        String result = bookingService.cancelFlight("1", "user1");
 
         // Assert the result
         assertEquals("Booking with Booking Id : 1 cancelled successfully", result);

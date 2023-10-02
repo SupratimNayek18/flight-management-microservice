@@ -74,7 +74,6 @@ export class ShowBookingsComponent {
             alert(`${response}`);
             window.location.reload();
           });
-        console.log('User clicked Yes');
       }
     }
   }

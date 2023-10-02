@@ -14,6 +14,11 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
 import { FormsModule } from '@angular/forms';
 import { ShowBookingsComponent } from './show-bookings/show-bookings.component';
 import { CheckInComponent } from './check-in/check-in.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ViewAllFlightsComponent } from './admin/view-all-flights/view-all-flights.component';
+import { AddFlightComponent } from './admin/add-flight/add-flight.component';
+import { DeleteFlightComponent } from './admin/delete-flight/delete-flight.component';
+import { ViewUserComponent } from './admin/view-user/view-user.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { CheckInComponent } from './check-in/check-in.component';
     BookFlightComponent,
     ShowBookingsComponent,
     CheckInComponent,
+    AdminPanelComponent,
+    ViewAllFlightsComponent,
+    AddFlightComponent,
+    DeleteFlightComponent,
+    ViewUserComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

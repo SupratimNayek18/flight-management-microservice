@@ -22,7 +22,11 @@ export class SigninComponent {
         sessionStorage.setItem('userName', response.userName);
         sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('role', response.role);
-        this.router.navigate(['']);
+        if (response.role === 'ROLE_ADMIN') {
+          this.router.navigate(['adminPanel']);
+        } else {
+          this.router.navigate(['']);
+        }
       },
       (error: any) => {
         alert('Invalid username or password. Please Try Again');

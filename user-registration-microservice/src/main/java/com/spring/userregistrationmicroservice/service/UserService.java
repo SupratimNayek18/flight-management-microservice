@@ -9,4 +9,5 @@ public interface UserService {
 
     UserDto getUser(String userName);
 
+    String deleteUser(String userName);
 }
