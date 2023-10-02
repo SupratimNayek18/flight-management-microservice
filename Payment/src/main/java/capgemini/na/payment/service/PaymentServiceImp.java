@@ -60,13 +60,11 @@ public class PaymentServiceImp implements PaymentService {
         // TODO Auto-generated method stub
         Optional<Payment> payment1 = repository.findById(transactionId);
         if (payment1.isPresent()) {
-            repository.save(payment);
-            return payment;
         } else {
             throw new PaymentNotFoundWithIdException("Payment not found with transactionId " + transactionId);
         }
-//		repository.save(payment);
-//		return payment;
+		repository.save(payment);
+		return payment;
     }
 
 }
