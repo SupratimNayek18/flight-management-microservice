@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LogoutService } from '../service/logout.service';
-import { Router } from '@angular/router';
+import { Router, UrlSegment } from '@angular/router';
+import { ViewUserService } from '../service/admin/view-user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,19 +9,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private logoutService: LogoutService, private router: Router) {}
+
+  name:string = '';
+  userName:string|null = null;
+
+  constructor(private logoutService: LogoutService, private router: Router,private viewUserService:ViewUserService) {}
 
   ngOnInit() {
     if (sessionStorage.getItem('role') === 'ROLE_ADMIN') {
       this.router.navigate(['adminPanel']);
     }
+    this.userName = sessionStorage.getItem('userName');
+    if(this.userName!=null){
+      this.viewUserService.viewUser(this.userName).subscribe(
+        (response:any)=>{
+          this.name = response.firstName+" "+response.lastName;
+        }
+      )
+    }
   }
 
-  userName = sessionStorage.getItem('userName');
-
-  flightData = {};
-
-  getFlightData(source: String, destination: String) {}
+  
 
   handleLogout() {
     this.logoutService.logout();

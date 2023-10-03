@@ -17,6 +17,11 @@
 .navbar-text {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: end;
   width: 400px;
+}
+
+.name-content-nav{
+  display: flex;
+  flex-direction: column;
 }

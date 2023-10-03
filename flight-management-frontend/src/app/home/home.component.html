@@ -17,7 +17,7 @@
           alt=""
         />
       </a>
-      <span class="navbar-text" *ngIf="userName == null">
+      <span class="navbar-text" *ngIf="userName === null">
         <form class="form-inline">
           <button class="btn btn-primary" type="button" routerLink="/signin">
             Sign In
@@ -32,6 +32,10 @@
         </form>
       </span>
       <span class="navbar-text" *ngIf="userName != null">
+        <div class="name-content-nav">
+          <a style="font-size:0.9rem">Welcome</a>
+          <a style="color: green;">{{name}}</a>
+        </div>
         <a class="nav-link" routerLink="showBookings">My Bookings</a>
         <button class="btn btn-danger" type="button" (click)="handleLogout()">
           Logout
