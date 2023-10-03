@@ -28,7 +28,7 @@ public class BookingRepositoryTests {
     @Test
     public void givenBookingShouldReturnBookingObject() {
         // Given
-        Booking booking1 = new Booking("1", 123, "User1", true, false, null);
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
 
         // When
         bookingRepository.save(booking1); // Data is saved into the Database
@@ -42,8 +42,8 @@ public class BookingRepositoryTests {
     @Test
     public void getAllMustReturnAllBookings() {
         // Given
-        Booking booking3 = new Booking("2", 456, "User2", true, false, null);
-        Booking booking4 = new Booking("3", 789, "User3", true, false, null);
+        Booking booking3 = new Booking("2", 456, "User2", true, false, null,2);
+        Booking booking4 = new Booking("3", 789, "User3", true, false, null,2);
         bookingRepository.save(booking3); // Save the Data in the Database
         bookingRepository.save(booking4); // Save the Data in the Database
 
@@ -58,7 +58,7 @@ public class BookingRepositoryTests {
     @Test
     public void givenBookingIdShouldReturnBookingObject() {
         // Given
-        Booking booking1 = new Booking("1", 123, "User1", true, false, null);
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
 
         // When
         bookingRepository.save(booking1); // Data is saved into the Database
@@ -82,7 +82,7 @@ public class BookingRepositoryTests {
     @Test
     public void givenUserNameShouldReturnBookingList() {
         // Given
-        Booking booking1 = new Booking("1", 123, "User1", true, false, null);
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
         bookingRepository.save(booking1);
 
         // When
