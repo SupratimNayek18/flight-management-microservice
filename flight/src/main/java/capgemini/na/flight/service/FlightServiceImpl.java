@@ -18,46 +18,57 @@ public class FlightServiceImpl implements FlightService {
 	FlightRepository repository;
 	
 	
+	
+	//Method to add flight data into database.
 	@Override
 	public Flight addFlight(Flight flight) {
+		
 		repository.save(flight);
+		
 		return flight;
 	}
 
+	//Method to delete flight data from database by flightId
 	@Override
 	public String deleteFlight(int flightId) throws FlightNotFoundException {
 			
+		//checking if flight with given Id is exists or not.
 	    if (repository.existsById(flightId)) {
+	    	
             repository.deleteById(flightId);
+            
             return "Flight Deleted Successfully...!";
         } else {
+        	
             throw new FlightNotFoundException("Flight with ID " + flightId + " not found");
         }
-	
 			
 	}
 
+	//Method to view all flights 
 	@Override
 	public List<Flight> viewAllFlight() {
 		
 		List<Flight> flight= new ArrayList<Flight>();
+		//getting all the flight data and adding into the list.
 		repository.findAll().forEach(flightDetails->flight.add(flightDetails));
+		
 		return flight;
 	}
 
+	
+	
+	//Method to search flights based on source and destination.
 	@Override
 	public List<Flight> searchFlight(String source, String destination) throws FlightNotFoundException {
 		
 		List<Flight> flight= new ArrayList<Flight>();
-		
+		//getting all the flight details.
 		repository.findAll().forEach(flightDetails->flight.add(flightDetails));
 		
 		List<Flight> matchedFlights=new ArrayList<Flight>();
-		
+		//matching the flight data of given source and destination.
 		matchedFlights=flight.stream().filter(f->(f.getSource().equals(source)&&f.getDestination().equals(destination))).collect(Collectors.toList());
-		
-//				flight.stream().filter(f->(f.getSource()==source&&f.getDestination()==destination)).forEach(f->matchedFlights.add(f));
-//		System.out.println(matchedFlights);
 		
 		   if (matchedFlights.isEmpty()) {
 	            throw new FlightNotFoundException("No flights found for source: " + source + " and destination: " + destination);
@@ -105,6 +116,7 @@ public class FlightServiceImpl implements FlightService {
 		
 	}
 
+	//method to view flights by flightName.                           
 	@Override
 	public List<Flight> viewFlightsByFlightName(String flightName) throws FlightNotFoundException  {
 		

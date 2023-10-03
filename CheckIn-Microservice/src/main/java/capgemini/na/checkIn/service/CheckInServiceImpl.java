@@ -22,82 +22,75 @@ import reactor.core.publisher.Mono;
 @Service
 public class CheckInServiceImpl implements CheckInService {
 
-    @Autowired
-    WebClient webClient;
-    @Autowired
-    CheckInRepository repository;
+	@Autowired
+	WebClient webClient;
+	@Autowired
+	CheckInRepository repository;
 
-    @Override
-    public CheckIn checkIn(String bookingId, String userName, List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+	@Override
+	public CheckIn checkIn(String bookingId, String userName, List<String> seatNumbers)
+			throws AlreadyCheckedInException, BookingNotFoundException {
 
-        //Getting booking details using booking id for which user has not checked in
-        BookingDto bookingDto = webClient.get()
-                .uri("http://localhost:8082/booking/validateBooking/" + bookingId + "/" + userName)
-                .retrieve()
-                .bodyToMono(BookingDto.class)
-                .block();
+		// Getting booking details using booking id for which user has not checked in
+		BookingDto bookingDto = webClient.get()
+				.uri("http://localhost:8082/booking/validateBooking/" + bookingId + "/" + userName).retrieve()
+				.bodyToMono(BookingDto.class).block();
 
-        if (bookingDto == null) {
-            throw new BookingNotFoundException("Booking with given id not found");
-        }
+		if (bookingDto == null) {
+			throw new BookingNotFoundException("Booking with given id not found");
+		}
 
-        if (bookingDto.getCheckInStatus()) {
-            throw new AlreadyCheckedInException("You have already checked in");
-        }
+		if (bookingDto.getCheckInStatus()) {
+			throw new AlreadyCheckedInException("You have already checked in");
+		}
 
-        FlightDto responseEntity = webClient.put()
-                .uri("http://localhost:8081/flight/update/" + bookingDto.getFlightId())
-                .body(BodyInserters.fromValue(seatNumbers))
-                .retrieve()
-                .bodyToMono(FlightDto.class).block();
+		FlightDto responseEntity = webClient.put()
+				.uri("http://localhost:8081/flight/update/" + bookingDto.getFlightId())
+				.body(BodyInserters.fromValue(seatNumbers)).retrieve().bodyToMono(FlightDto.class).block();
 
-        CheckIn checkIn = new CheckIn();
-        checkIn.setCheckInId(UUID.randomUUID().toString());
-        checkIn.setCheckInStatus("Success");
-        checkIn.setFlightId(bookingDto.getFlightId());
-        checkIn.setSeatsBooked(seatNumbers);
-        checkIn.setUserName(userName);
+		CheckIn checkIn = new CheckIn();
+		checkIn.setCheckInId(UUID.randomUUID().toString());
+		checkIn.setCheckInStatus("Success");
+		checkIn.setFlightId(bookingDto.getFlightId());
+		checkIn.setSeatsBooked(seatNumbers);
+		checkIn.setUserName(userName);
 
-        //TODO make a rest api call to booking service to update checkin status along with checkin id
+		// making a rest api call to booking service to update checkin status along with
+		// checkin id
 
-        BookingDto bookingDto1 = webClient.put()
-                .uri("http://localhost:8082/booking/updateBookingCheckInStatus/"+bookingId+"/"+checkIn.getCheckInId())
-                .retrieve()
-                .bodyToMono(BookingDto.class)
-                .block();
+		BookingDto bookingDto1 = webClient.put().uri(
+				"http://localhost:8082/booking/updateBookingCheckInStatus/" + bookingId + "/" + checkIn.getCheckInId())
+				.retrieve().bodyToMono(BookingDto.class).block();
 
-        return repository.save(checkIn);
+		return repository.save(checkIn);
 
-    }
+	}
 
-    @Override
-    public CheckIn cancelCheckIn(String checkInId) throws BookingNotFoundException {
+	@Override
+	public CheckIn cancelCheckIn(String checkInId) throws BookingNotFoundException {
 
-        Optional<CheckIn> optionalCheckIn = repository.findById(checkInId);
+		Optional<CheckIn> optionalCheckIn = repository.findById(checkInId);
 
-        if(optionalCheckIn.isPresent()){
+		if (optionalCheckIn.isPresent()) {
 
-            CheckIn checkIn = optionalCheckIn.get();
+			CheckIn checkIn = optionalCheckIn.get();
 
-            List<String> seatNumbers = checkIn.getSeatsBooked();
+			List<String> seatNumbers = checkIn.getSeatsBooked();
 
-            //Making a rest api call to flight microservice to restore the seats
+			// Making a rest api call to flight microservice to restore the seats
 
-            FlightDto updatedFlight = webClient.put()
-                    .uri("http://localhost:8081/flight/restoreFlightSeats/"+checkIn.getFlightId())
-                    .body(BodyInserters.fromValue(seatNumbers))
-                    .retrieve()
-                    .bodyToMono(FlightDto.class)
-                    .block();
+			FlightDto updatedFlight = webClient.put()
+					.uri("http://localhost:8081/flight/restoreFlightSeats/" + checkIn.getFlightId())
+					.body(BodyInserters.fromValue(seatNumbers)).retrieve().bodyToMono(FlightDto.class).block();
 
-            repository.delete(checkIn);
+			repository.delete(checkIn);
 
-            return checkIn;
+			return checkIn;
 
-        }
+		}
 
-        throw new BookingNotFoundException("Check in data with booking id not found");
+		throw new BookingNotFoundException("Check in data with booking id not found");
 
-    }
+	}
 
 }

@@ -26,19 +26,29 @@ public class PaymentController {
 	@Autowired
 	PaymentService service;
 	
+	//EndPoint to make payment.
 	@GetMapping("/doPayment/{userName}/{amount}")
 	public Payment doPayment(@PathVariable String userName,@PathVariable double amount) throws Exception {
+		
 		return service.doPayment(userName,amount);
+		
 	}
+	
+	//EndPoint to get Transaction based on TransactionId.
 	@GetMapping("/getByTransactionId/{transactionId}")
 	public ResponseEntity<Payment> getPayment(@PathVariable String transactionId) throws PaymentNotFoundWithIdException {
+		
 		Payment payment= service.getPayment(transactionId);
+		
 		return new ResponseEntity<Payment>(payment,HttpStatus.OK);
 	}
 	
+	//EndPoint to Update Payment.
 	@PutMapping("/update/{transactionId}")
 	public ResponseEntity<Payment> updatePayment(@PathVariable String transactionId,@RequestBody Payment payment) throws PaymentNotFoundWithIdException {
+		
 		Payment payment2= service.updatePayment(transactionId, payment);
+		
 		return new ResponseEntity<Payment>(payment2,HttpStatus.OK);
 		
 	}

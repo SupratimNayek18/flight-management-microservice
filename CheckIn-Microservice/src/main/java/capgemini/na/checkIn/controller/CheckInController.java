@@ -16,18 +16,25 @@ import capgemini.na.checkIn.service.CheckInService;
 @RestController
 @RequestMapping("/checkIn")
 public class CheckInController {
-	
+
 	@Autowired
 	CheckInService service;
-	
-	@GetMapping("/{bookingId}/{userName}")
-	public ResponseEntity<CheckIn> checkIn(@PathVariable String bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+
+	// post endpoint  for checking in.
+	@PostMapping("/{bookingId}/{userName}")
+	public ResponseEntity<CheckIn> checkIn(@PathVariable String bookingId, @PathVariable String userName,
+			
+			@RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+		
 		return new ResponseEntity<>(service.checkIn(bookingId, userName, seatNumbers), HttpStatus.OK);
 	}
 
+	//put endpoint to cancel check in.
 	@PutMapping("/cancelCheckIn/{checkInId}")
 	public ResponseEntity<CheckIn> cancelCheckIn(@PathVariable String checkInId) throws BookingNotFoundException {
-		return new ResponseEntity<>(service.cancelCheckIn(checkInId),HttpStatus.OK);
+		
+		return new ResponseEntity<>(service.cancelCheckIn(checkInId), HttpStatus.OK);
+	
 	}
 
 }
