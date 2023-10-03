@@ -19,6 +19,7 @@ public class CheckInController {
 
 	@Autowired
 	CheckInService service;
+<<<<<<< HEAD
 
 	// post endpoint  for checking in.
 	@PostMapping("/{bookingId}/{userName}")
@@ -26,6 +27,11 @@ public class CheckInController {
 			
 			@RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
 		
+=======
+	
+	@PostMapping("/{bookingId}/{userName}")
+	public ResponseEntity<CheckIn> checkIn(@PathVariable String bookingId, @PathVariable String userName, @RequestBody List<String> seatNumbers) throws AlreadyCheckedInException, BookingNotFoundException {
+>>>>>>> e08c1da8496682ee9b4fd4a2282e7e66d2ba4400
 		return new ResponseEntity<>(service.checkIn(bookingId, userName, seatNumbers), HttpStatus.OK);
 	}
 
