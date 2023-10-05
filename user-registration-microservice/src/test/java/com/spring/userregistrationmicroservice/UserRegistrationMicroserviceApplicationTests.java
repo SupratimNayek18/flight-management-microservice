@@ -1,55 +1,41 @@
 package com.spring.userregistrationmicroservice;
 
-<<<<<<< HEAD
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-=======
-import com.spring.userregistrationmicroservice.dto.UserDto;
-import com.spring.userregistrationmicroservice.entity.User;
-import com.spring.userregistrationmicroservice.repository.UserRepository;
-import com.spring.userregistrationmicroservice.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
->>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-<<<<<<< HEAD
 import com.spring.userregistrationmicroservice.dto.UserDto;
 import com.spring.userregistrationmicroservice.entity.User;
 import com.spring.userregistrationmicroservice.repository.UserRepository;
 import com.spring.userregistrationmicroservice.service.UserServiceImpl;
-=======
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
->>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
 
 @SpringBootTest
 public class UserRegistrationMicroserviceApplicationTests {
 
-<<<<<<< HEAD
+
     @Mock
     private UserRepository userRepository;
-=======
+
 	@InjectMocks
 	private UserServiceImpl userService;
 
-	@Mock
-	private UserRepository userRepository;
 
 	@Mock
 	private PasswordEncoder passwordEncoder;
@@ -94,39 +80,7 @@ public class UserRegistrationMicroserviceApplicationTests {
 
 	}
 
-	@Test
-	public void testDeleteUser() {
-		// creating mock username
-		String userNameToDelete = "test";
 
-		when(userRepository.findById(userNameToDelete)).thenReturn(Optional.of(new User()));
-
-		String result = userService.deleteUser(userNameToDelete);
-
-		assertNotNull(result);
-		assertEquals("User with username test deleted successfully", result);
-		verify(userRepository, times(1)).delete(any(User.class));
-
-	}
-
-	@Test
-	public void testDeleteUserNotFound() {
-		// Arrange
-		String userNameToDelete = "nonexistentuser";
-
-		// Mock the behavior of userRepository.findById
-		when(userRepository.findById(userNameToDelete)).thenReturn(Optional.empty());
-
-		// Act and Assert
-		assertThrows(UsernameNotFoundException.class, () -> userService.deleteUser(userNameToDelete));
-	}
->>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    @InjectMocks
-    private UserServiceImpl userService;
 
     @Test
     public void testRegisterUser() {
