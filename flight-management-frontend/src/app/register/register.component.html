@@ -1,172 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
     <div class="register-container">
-      <h3 style="margin-bottom: 30px">Register Here</h3>
-      <form
-        #registrationForm="ngForm"
-        (ngSubmit)="handleRegistration(registrationForm)"
-      >
-        <div class="mb-3 row">
-          <label for="firstName" class="col-sm-2 col-form-label"
-            >First Name</label
-          >
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="firstName"
-              name="firstName"
-              required
-              [(ngModel)]="formData['firstName']"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['firstName'].invalid &&
-                registrationForm.controls['firstName'].touched
-              "
-              class="text-danger"
-            >
-              First Name is required
+        <h3 style="margin-bottom: 30px">Register Here</h3>
+        <form [formGroup]="registrationForm" (ngSubmit)="handleRegistration()">
+            <div class="mb-3">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                <div *ngIf="registrationForm.get('firstName')?.hasError('required') && registrationForm.get('firstName')?.touched" class="text-danger">
+                    First Name is required
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="lastName" class="col-sm-2 col-form-label"
-            >Last Name</label
-          >
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="lastName"
-              name="lastName"
-              required
-              [(ngModel)]="formData['lastName']"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['lastName'].invalid &&
-                registrationForm.controls['lastName'].touched
-              "
-              class="text-danger"
-            >
-              Last Name is required
+            <div class="mb-3">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                <div *ngIf="registrationForm.get('lastName')?.hasError('required') && registrationForm.get('lastName')?.touched" class="text-danger">
+                    Last Name is required
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="address" class="col-sm-2 col-form-label">Address</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              name="address"
-              required
-              [(ngModel)]="formData['address']"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['address'].invalid &&
-                registrationForm.controls['address'].touched
-              "
-              class="text-danger"
-            >
-              Address is required
+            <div class="mb-3">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+                <div *ngIf="registrationForm.get('address')?.hasError('required') && registrationForm.get('address')?.touched" class="text-danger">
+                    Address is required
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="phoneNumber" class="col-sm-2 col-form-label"
-            >Phone Number</label
-          >
-          <div class="col-sm-10">
-            <input
-              type="number"
-              class="form-control"
-              id="phoneNumber"
-              name="phoneNumber"
-              required
-              [(ngModel)]="formData.phoneNumber"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['phoneNumber'].invalid &&
-                registrationForm.controls['phoneNumber'].touched
-              "
-              class="text-danger"
-            >
-              Phone Number is required
+            <div class="mb-3">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+                <div *ngIf="registrationForm.get('phoneNumber')?.hasError('required') && registrationForm.get('phoneNumber')?.touched" class="text-danger">
+                    Phone Number is required
+                </div>
+                <div *ngIf="registrationForm.get('phoneNumber')?.hasError('invalidPhoneNumber') && registrationForm.get('phoneNumber')?.touched" class="text-danger">
+                    Invalid phone number format. It must be 10 digits.
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="userName" class="col-sm-2 col-form-label"
-            >User Name</label
-          >
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              name="userName"
-              required
-              [(ngModel)]="formData.userName"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['userName'].invalid &&
-                registrationForm.controls['userName'].touched
-              "
-              class="text-danger"
-            >
-              User Name is required
+            <div class="mb-3">
+                <label for="userName">User Name</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName">
+                <div *ngIf="registrationForm.get('userName')?.hasError('required') && registrationForm.get('userName')?.touched" class="text-danger">
+                    User Name is required
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="mb-3 row">
-          <label for="password" class="col-sm-2 col-form-label">Password</label>
-          <div class="col-sm-10">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              required
-              [(ngModel)]="formData.password"
-            />
-            <div
-              *ngIf="
-                registrationForm.controls['password'].invalid &&
-                registrationForm.controls['password'].touched
-              "
-              class="text-danger"
-            >
-              Password is required
+            <div class="mb-3">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+                <div *ngIf="registrationForm.get('password')?.hasError('required') && registrationForm.get('password')?.touched" class="text-danger">
+                    Password is required
+                </div>
+                <div *ngIf="registrationForm.get('password')?.hasError('invalidPassword') && registrationForm.get('password')?.touched" class="text-danger">
+                    Must contains 8 characters, including a number, a lowercase, a uppercase letter and special characters #, ?, !, @.
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div class="col-12">
-          <button
-            type="submit"
-            [disabled]="registrationForm.invalid"
-            class="btn btn-primary"
-          >
-            Register
-          </button>
-        </div>
-      </form>
+            <div>
+                <button type="submit" [disabled]="registrationForm.invalid" class="btn btn-primary">Register</button>
+            </div>
+        </form>
     </div>
-  </body>
+</body>
 </html>
