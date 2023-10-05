@@ -11,7 +11,7 @@ import { SearchFlightsComponent } from './search-flights/search-flights.componen
 import { NoticesPromotionsComponent } from './notices-promotions/notices-promotions.component';
 import { BookFlightCardContainerComponent } from './book-flight-card-container/book-flight-card-container.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowBookingsComponent } from './show-bookings/show-bookings.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -38,7 +38,7 @@ import { ViewUserComponent } from './admin/view-user/view-user.component';
     DeleteFlightComponent,
     ViewUserComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule,ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
