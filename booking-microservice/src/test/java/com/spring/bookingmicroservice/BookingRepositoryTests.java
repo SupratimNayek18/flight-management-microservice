@@ -28,7 +28,11 @@ public class BookingRepositoryTests {
     @Test
     public void givenBookingShouldReturnBookingObject() {
         // Given
+<<<<<<< HEAD
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null, null);
+=======
         Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
+>>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
 
         // When
         bookingRepository.save(booking1); // Data is saved into the Database
@@ -39,6 +43,8 @@ public class BookingRepositoryTests {
         assertEquals(booking1.getUserName(), booking2.getUserName());
     }
 
+<<<<<<< HEAD
+=======
     @Test
     public void getAllMustReturnAllBookings() {
         // Given
@@ -54,11 +60,16 @@ public class BookingRepositoryTests {
         assertEquals(4, bookingList.size());
         assertEquals("User3", bookingList.get(3).getUserName());
     }
+>>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
 
     @Test
     public void givenBookingIdShouldReturnBookingObject() {
         // Given
+<<<<<<< HEAD
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null, null);
+=======
         Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
+>>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
 
         // When
         bookingRepository.save(booking1); // Data is saved into the Database
@@ -82,7 +93,11 @@ public class BookingRepositoryTests {
     @Test
     public void givenUserNameShouldReturnBookingList() {
         // Given
+<<<<<<< HEAD
+        Booking booking1 = new Booking("1", 123, "User1", true, false, null, null);
+=======
         Booking booking1 = new Booking("1", 123, "User1", true, false, null,2);
+>>>>>>> 0dad655e9542b94f8f8f3bdd6e0a8875af5447ac
         bookingRepository.save(booking1);
 
         // When
