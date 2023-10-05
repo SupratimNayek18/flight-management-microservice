@@ -73,6 +73,8 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(userName),HttpStatus.OK);
     }
 
+
+    //Endpoint to delete the user with username
     @DeleteMapping("/deleteUser/{userName}")
     public ResponseEntity<String> deleteUser(@PathVariable String userName){
         return new ResponseEntity<>(userService.deleteUser(userName),HttpStatus.OK);

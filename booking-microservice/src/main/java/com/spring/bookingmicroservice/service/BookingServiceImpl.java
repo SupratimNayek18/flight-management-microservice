@@ -31,6 +31,7 @@ public class BookingServiceImpl implements BookingService{
     @Autowired
     WebClient webClient;
 
+    //Method to book a flight
     @Override
     @CircuitBreaker(name = "bookFlightCircuitBreaker",fallbackMethod = "bookFlightFallBack")
     public BookingDto bookFlight(Integer flightId, String userName, Integer noOfPersons) throws BookingFailedException, UserNameNotFoundException {
@@ -124,6 +125,7 @@ public class BookingServiceImpl implements BookingService{
         return new BookingDto();
     }
 
+    //Method to get booking details by booking id
     @Override
     public BookingDto getBookingDetails(String bookingId) throws BookingNotFoundException {
 
@@ -137,6 +139,7 @@ public class BookingServiceImpl implements BookingService{
 
     }
 
+    //method to get booking details by username
     @Override
     public List<Booking> getBookingByUserName(String userName) throws BookingNotFoundException {
 
@@ -221,6 +224,7 @@ public class BookingServiceImpl implements BookingService{
 
     }
 
+    //This method will be valled from check in service to update the booking db with check in stayus and id
     @Override
     public BookingDto updateBookingCheckInStatus(String bookingId,String checkInId) throws BookingNotFoundException {
 
