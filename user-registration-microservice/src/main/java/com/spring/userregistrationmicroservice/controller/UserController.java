@@ -3,6 +3,7 @@ package com.spring.userregistrationmicroservice.controller;
 import com.spring.userregistrationmicroservice.dto.SignInResponse;
 import com.spring.userregistrationmicroservice.dto.UserDto;
 import com.spring.userregistrationmicroservice.entity.User;
+import com.spring.userregistrationmicroservice.exception.UserAlreadyExistsException;
 import com.spring.userregistrationmicroservice.request.JwtRequest;
 import com.spring.userregistrationmicroservice.service.UserService;
 import com.spring.userregistrationmicroservice.util.JwtUtil;
@@ -63,7 +64,7 @@ public class UserController {
 
     //Endpoint to register new user
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody User user){
+    public ResponseEntity<UserDto> register(@RequestBody User user) throws UserAlreadyExistsException {
         return ResponseEntity.ok(userService.register(user));
     }
 
@@ -78,6 +79,11 @@ public class UserController {
     @DeleteMapping("/deleteUser/{userName}")
     public ResponseEntity<String> deleteUser(@PathVariable String userName){
         return new ResponseEntity<>(userService.deleteUser(userName),HttpStatus.OK);
+    }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.updateUser(userDto),HttpStatus.OK);
     }
 
 }

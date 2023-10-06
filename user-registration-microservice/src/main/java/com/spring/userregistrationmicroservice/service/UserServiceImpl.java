@@ -2,6 +2,7 @@ package com.spring.userregistrationmicroservice.service;
 
 import com.spring.userregistrationmicroservice.dto.UserDto;
 import com.spring.userregistrationmicroservice.entity.User;
+import com.spring.userregistrationmicroservice.exception.UserAlreadyExistsException;
 import com.spring.userregistrationmicroservice.repository.UserRepository;
 import com.spring.userregistrationmicroservice.util.EntityToDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,13 @@ public class UserServiceImpl implements UserService {
 
     //Registers new users and adds them to the database
     @Override
-    public UserDto register(User user) {
+    public UserDto register(User user) throws UserAlreadyExistsException {
+
+        Optional<User> userFromDb = userRepository.findById(user.getUserName());
+
+        if(userFromDb.isPresent()){
+            throw new UserAlreadyExistsException("User with username already exists");
+        }
 
         //Encoding the user password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -44,6 +51,33 @@ public class UserServiceImpl implements UserService {
         }
         throw new UsernameNotFoundException("User with username not found");
 
+    }
+
+    @Override
+    public UserDto updateUser(UserDto userDto) {
+
+        Optional<User> optionalUser = userRepository.findById(userDto.getUserName());
+
+        if(optionalUser.isEmpty()){
+            throw new UsernameNotFoundException("User with username not found");
+        }
+
+        User user = optionalUser.get();
+
+        if(userDto.getAddress()!=null){
+            user.setAddress(userDto.getAddress());
+        }
+        if(userDto.getFirstName()!=null){
+            user.setFirstName(userDto.getFirstName());
+        }
+        if(userDto.getLastName()!=null){
+            user.setLastName(userDto.getLastName());
+        }
+        if(userDto.getPhoneNumber()!=null){
+            user.setPhoneNumber(userDto.getPhoneNumber());
+        }
+
+        return EntityToDto.convertToDto(userRepository.save(user));
     }
 
     @Override

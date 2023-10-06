@@ -11,4 +11,8 @@ export class ViewUserService {
     let getUserUrl = `http://localhost:9090/user/getUser/${userName}`;
     return this.http.get(getUserUrl);
   }
+
+  setUser(user: any) {
+    sessionStorage.setItem('user', user);
+  }
 }
