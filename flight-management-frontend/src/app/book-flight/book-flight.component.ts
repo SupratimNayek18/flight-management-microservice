@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookFlightService } from '../service/book-flight.service';
-import { PaymentServiceService } from '../payment-service.service';
+import { PaymentServiceService } from '../service/payment-service.service';
 
 @Component({
   selector: 'app-book-flight',

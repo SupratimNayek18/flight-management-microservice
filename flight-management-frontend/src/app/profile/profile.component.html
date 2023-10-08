@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <h3 style="text-align: center; margin-top: 30px">Profile</h3>
+    <h3 style="text-align: center; margin: 30px auto">Profile</h3>
     <div class="profile-container">
       <div class="card" style="width: 18rem">
         <div class="card-body">
@@ -21,10 +21,14 @@
           <p class="card-text">Username : {{ user.userName }}</p>
           <p class="card-text">Address : {{ user.address }}</p>
           <p class="card-text">Phone Number : {{ user.phoneNumber }}</p>
-          <a href="#" class="btn btn-success">Update</a>
-          <a href="#" style="margin-left: 15px" class="btn btn-danger"
-            >Delete Profile</a
+          <a class="btn btn-success" href="updateProfile">Update</a>
+          <button
+            style="margin-left: 15px"
+            class="btn btn-danger"
+            (click)="deleteProfile()"
           >
+            Delete Profile
+          </button>
         </div>
       </div>
     </div>

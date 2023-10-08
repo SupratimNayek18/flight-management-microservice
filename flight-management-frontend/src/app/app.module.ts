@@ -20,6 +20,7 @@ import { AddFlightComponent } from './admin/add-flight/add-flight.component';
 import { DeleteFlightComponent } from './admin/delete-flight/delete-flight.component';
 import { ViewUserComponent } from './admin/view-user/view-user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ProfileComponent } from './profile/profile.component';
     DeleteFlightComponent,
     ViewUserComponent,
     ProfileComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,
