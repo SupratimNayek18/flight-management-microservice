@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookFlightService } from '../service/book-flight.service';
+import { PaymentServiceService } from '../service/payment-service.service';
 
 @Component({
   selector: 'app-book-flight',
@@ -20,7 +21,8 @@ export class BookFlightComponent {
 
   constructor(
     private router: Router,
-    private bookFLightService: BookFlightService
+    private bookFLightService: BookFlightService,
+    private paymentService: PaymentServiceService
   ) {}
 
   ngOnInit() {
@@ -44,6 +46,16 @@ export class BookFlightComponent {
 
   handleBooking(noOfPersons: string) {
     let persons = Number.parseInt(noOfPersons);
+
+    let user = sessionStorage.getItem('user');
+    if (user != null) {
+      user = JSON.parse(user);
+    }
+
+    if (this.price) {
+      let totalCost = persons * this.price;
+      this.paymentService.payNow(user, totalCost);
+    }
     if (this.flightId != null && this.userName != null && this.token != null) {
       this.bookFLightService
         .bookFlight(this.flightId, this.userName, persons, this.token)

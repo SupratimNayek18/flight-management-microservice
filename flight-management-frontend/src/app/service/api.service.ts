@@ -19,4 +19,9 @@ export class ApiService {
     return this.http.post<any>(signinUrl, data);
   }
 
+  updateUser(data: any): any {
+    const updateUrl = 'http://localhost:9090/user/updateUser';
+
+    return this.http.put<any>(updateUrl, data);
+  }
 }

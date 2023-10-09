@@ -12,6 +12,8 @@ import { ViewAllFlightsComponent } from './admin/view-all-flights/view-all-fligh
 import { AddFlightComponent } from './admin/add-flight/add-flight.component';
 import { DeleteFlightComponent } from './admin/delete-flight/delete-flight.component';
 import { ViewUserComponent } from './admin/view-user/view-user.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'adminPanel/addFlight', component: AddFlightComponent },
   { path: 'adminPanel/deleteFlight', component: DeleteFlightComponent },
   { path: 'adminPanel/viewUser', component: ViewUserComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'updateProfile', component: UpdateProfileComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import com.spring.userregistrationmicroservice.exception.UserAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -46,7 +47,7 @@ public class UserRegistrationMicroserviceApplicationTests {
 	}
 
 	@Test
-	public void testRegister() {
+	public void testRegister() throws UserAlreadyExistsException {
 		// Creating mock register object
 		User userToRegister = new User();
 		userToRegister.setUserName("test");
@@ -83,7 +84,7 @@ public class UserRegistrationMicroserviceApplicationTests {
 
 
     @Test
-    public void testRegisterUser() {
+    public void testRegisterUser() throws UserAlreadyExistsException {
         // Test user registration
         User user = new User("testUser", "password", "ROLE_USER", "John", "Doe", "Address", 123456789L);
         when(passwordEncoder.encode(user.getPassword())).thenReturn("encodedPassword");

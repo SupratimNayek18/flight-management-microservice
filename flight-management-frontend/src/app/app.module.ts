@@ -19,6 +19,8 @@ import { ViewAllFlightsComponent } from './admin/view-all-flights/view-all-fligh
 import { AddFlightComponent } from './admin/add-flight/add-flight.component';
 import { DeleteFlightComponent } from './admin/delete-flight/delete-flight.component';
 import { ViewUserComponent } from './admin/view-user/view-user.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +39,16 @@ import { ViewUserComponent } from './admin/view-user/view-user.component';
     AddFlightComponent,
     DeleteFlightComponent,
     ViewUserComponent,
+    ProfileComponent,
+    UpdateProfileComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule,ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
