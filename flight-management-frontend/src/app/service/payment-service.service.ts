@@ -11,7 +11,7 @@ export class PaymentServiceService {
     const RazorpayOptions = {
       description: 'Sample Razorpay demo',
       currency: 'INR',
-      amount: totalCost,
+      amount: totalCost * 100,
       name: 'Air Platina',
       key: 'rzp_test_Uh47k5lVlScFHI',
       image: 'https://i.imgur.com/FApqk3D.jpeg',

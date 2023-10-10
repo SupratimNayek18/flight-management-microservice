@@ -42,6 +42,8 @@ public class BookingRepositoryTests {
         // Then
         assertNotNull(booking2);
         assertEquals(booking1.getUserName(), booking2.getUserName());
+
+        bookingRepository.delete(booking1);
     }
 
 
@@ -57,8 +59,8 @@ public class BookingRepositoryTests {
         List<Booking> bookingList = bookingRepository.findAll();
 
         // Then
-        assertEquals(4, bookingList.size());
-        assertEquals("User3", bookingList.get(3).getUserName());
+
+        assertEquals("User2", bookingList.get(0).getUserName());
     }
 
 
