@@ -18,7 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import capgemini.na.flight.entity.Flight;
 import capgemini.na.flight.repository.FlightRepository;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 public class FlightRepositoryTests {
 

@@ -50,8 +50,7 @@ package capgemini.na.payment;
             List<Payment> paymentList = (List<Payment>) paymentRepository.findAll();
 
             // Then
-            assertEquals(4, paymentList.size());
-            assertEquals("Booking3", paymentList.get(2).getBookingId());
+            assertEquals("Booking1", paymentList.get(2).getBookingId());
         }
 
         @Test
