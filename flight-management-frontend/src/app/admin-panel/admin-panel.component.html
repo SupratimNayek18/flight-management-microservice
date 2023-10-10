@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          ngClass="primary-logo"
+          src="./assets/Air_Platina-removebg-preview.png"
+          width="200"
+          height="200"
+          class="d-inline-block align-top"
+          alt=""
+        />
+      </a>
+
+      <span class="navbar-text" *ngIf="userName != null">
+        <button class="btn btn-danger" type="button" (click)="handleLogout()">
+          Logout
+        </button>
+      </span>
+    </nav>
+    <div class="admin-cards-container">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">Add Flight to Database</h5>
+          <a href="adminPanel/addFlight" class="card-link">Add</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">View All Flights</h5>
+          <a href="adminPanel/viewAllFlights" class="card-link">View</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">Delete Flight</h5>
+          <a href="adminPanel/deleteFlight" class="card-link">Delete</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">View User Information</h5>
+          <a href="adminPanel/viewUser" class="card-link">View</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

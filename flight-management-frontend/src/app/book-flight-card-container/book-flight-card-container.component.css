@@ -1,0 +1,9 @@
+.book-flight-cards-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 100px;
+}
+
+.book-flight-cards-container > div {
+  width: 40%;
+}

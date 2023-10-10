@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          ngClass="primary-logo"
+          src="./assets/Air_Platina-removebg-preview.png"
+          width="200"
+          height="200"
+          class="d-inline-block align-top"
+          alt=""
+        />
+      </a>
+      <span class="navbar-text" *ngIf="userName === null">
+        <form class="form-inline">
+          <button class="btn btn-primary" type="button" routerLink="/signin">
+            Sign In
+          </button>
+          <button
+            class="btn btn-secondary register-in-button"
+            type="button"
+            routerLink="/register"
+          >
+            Register
+          </button>
+        </form>
+      </span>
+      <span class="navbar-text" *ngIf="userName != null">
+        <div class="name-content-nav">
+          <a style="font-size: 0.9rem">Welcome</a>
+          <a style="color: green" routerLink="profile">{{ name }}</a>
+        </div>
+        <a class="nav-link" routerLink="showBookings">My Bookings</a>
+        <button class="btn btn-danger" type="button" (click)="handleLogout()">
+          Logout
+        </button>
+      </span>
+    </nav>
+
+    <div class="home-body-container">
+      <app-book-flight-card-container />
+      <app-notices-promotions />
+    </div>
+  </body>
+</html>

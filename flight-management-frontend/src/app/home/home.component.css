@@ -1,0 +1,27 @@
+.primary-logo {
+  margin-left: 30px;
+}
+
+.navbar-text {
+  margin-right: 30px;
+}
+
+.register-in-button {
+  margin-left: 20px;
+}
+
+.home-body-container {
+  margin: 50px 30px;
+}
+
+.navbar-text {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: end;
+  width: 400px;
+}
+
+.name-content-nav{
+  display: flex;
+  flex-direction: column;
+}

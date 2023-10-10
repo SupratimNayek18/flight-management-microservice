@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="checkIn-container">
+      <h3 style="text-align: center; margin-bottom: 30px">Check In</h3>
+      <form>
+        <div class="mb-3">
+          <label for="bookingId" class="form-label">Booking Id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="bookingId"
+            name="bookingId"
+            [(ngModel)]="bookingId"
+            disabled
+          />
+        </div>
+        <div class="mb-3">
+          <label for="userName" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userName"
+            name="userName"
+            [(ngModel)]="userName"
+            disabled
+          />
+        </div>
+        <h5>Select Seats</h5>
+        <div class="form-check" *ngFor="let seat of seatsArray">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            (click)="toggleSeat(seat)"
+            [disabled]="
+              seatsSelected.length >= noOfPersons && !isSelected(seat)
+            "
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ seat }}
+          </label>
+        </div>
+        <button
+          type="submit"
+          style="margin-top: 10px"
+          class="btn btn-success"
+          (click)="handleCheckIn()"
+        >
+          Check In
+        </button>
+      </form>
+      <div
+        class="alert alert-success"
+        style="margin-top: 10px"
+        role="alert"
+        *ngIf="status !== undefined"
+      >
+        {{ status }}
+        <a style="margin-left: 5px" routerLink="">Go to home</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="add-flight-container">
+      <h3 style="text-align: center; margin: 30px">Add Flight</h3>
+      <form #addFlightForm="ngForm" (ngSubmit)="handleAddFlight(addFlightForm)">
+        <div class="mb-3 row">
+          <label for="flightId" class="col-sm-2 col-form-label"
+            >Flight Id</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="number"
+              class="form-control"
+              id="flightId"
+              name="flightId"
+              required
+              [(ngModel)]="formData['flightId']"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['flightId'].invalid &&
+                addFlightForm.controls['flightId'].touched
+              "
+              class="text-danger"
+            >
+              Flight Id is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="flightName" class="col-sm-2 col-form-label"
+            >Flight Name</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="flightName"
+              name="flightName"
+              required
+              [(ngModel)]="formData['flightName']"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['flightName'].invalid &&
+                addFlightForm.controls['flightName'].touched
+              "
+              class="text-danger"
+            >
+              Flight Name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="source" class="col-sm-2 col-form-label">Source</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="source"
+              name="source"
+              required
+              [(ngModel)]="formData['source']"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['source'].invalid &&
+                addFlightForm.controls['source'].touched
+              "
+              class="text-danger"
+            >
+              Source is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="destination" class="col-sm-2 col-form-label"
+            >Destination</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="destination"
+              name="destination"
+              required
+              [(ngModel)]="formData.destination"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['destination'].invalid &&
+                addFlightForm.controls['destination'].touched
+              "
+              class="text-danger"
+            >
+              Destination is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="date" class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-10">
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              name="date"
+              required
+              [(ngModel)]="formData.date"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['date'].invalid &&
+                addFlightForm.controls['date'].touched
+              "
+              class="text-danger"
+            >
+              Date is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="departure" class="col-sm-2 col-form-label"
+            >Departure</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="time"
+              class="form-control"
+              id="departure"
+              name="departure"
+              required
+              [(ngModel)]="formData.departure"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['departure'].invalid &&
+                addFlightForm.controls['departure'].touched
+              "
+              class="text-danger"
+            >
+              Departure is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="arrival" class="col-sm-2 col-form-label">Arrival</label>
+          <div class="col-sm-10">
+            <input
+              type="time"
+              class="form-control"
+              id="arrival"
+              name="arrival"
+              required
+              [(ngModel)]="formData.arrival"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['arrival'].invalid &&
+                addFlightForm.controls['arrival'].touched
+              "
+              class="text-danger"
+            >
+              Arrival is required
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="price" class="col-sm-2 col-form-label">Price</label>
+          <div class="col-sm-10">
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              name="price"
+              required
+              [(ngModel)]="formData.price"
+            />
+            <div
+              *ngIf="
+                addFlightForm.controls['price'].invalid &&
+                addFlightForm.controls['price'].touched
+              "
+              class="text-danger"
+            >
+              Price is required
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            [disabled]="addFlightForm.invalid"
+            class="btn btn-primary"
+          >
+            Add Flight
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
